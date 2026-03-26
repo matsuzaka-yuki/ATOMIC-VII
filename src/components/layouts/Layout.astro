@@ -1,6 +1,7 @@
 ---
 import Header from "../organisms/Header.astro";
 import Footer from "../organisms/Footer.astro";
+import { ClientRouter } from "astro:transitions";
 import "../../styles/global.css";
 
 interface Props {
@@ -17,6 +18,7 @@ const { title = "ATOMIC-7 // 核子前沿研究所", currentPath = "/" } = Astro
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+    <ClientRouter />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -26,7 +28,8 @@ const { title = "ATOMIC-7 // 核子前沿研究所", currentPath = "/" } = Astro
   </head>
   <body class="noise-overlay">
     <Header currentPath={currentPath} />
-    <main>
+    <div id="vt-scanline" aria-hidden="true"></div>
+    <main style="view-transition-name: main-content;">
       <slot />
     </main>
     <Footer />
@@ -44,6 +47,32 @@ const { title = "ATOMIC-7 // 核子前沿研究所", currentPath = "/" } = Astro
       );
 
       document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+
+      document.addEventListener("astro:before-swap", () => {
+        const scanline = document.getElementById("vt-scanline");
+        if (scanline) {
+          scanline.classList.add("active");
+        }
+      });
+
+      document.addEventListener("astro:after-swap", () => {
+        const scanline = document.getElementById("vt-scanline");
+        if (scanline) {
+          setTimeout(() => scanline.classList.remove("active"), 400);
+        }
+
+        const observer2 = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        document.querySelectorAll(".fade-in").forEach((el) => observer2.observe(el));
+      });
     </script>
   </body>
 </html>
