@@ -70,9 +70,15 @@
         安全协议
       </h4>
       <ul class="list-none">
-        {["辐射防护守则", "紧急疏散程序", "权限申请流程", "机密等级说明", "违禁物品清单"].map((item) => (
+        {[
+          { label: "辐射防护守则", href: "/protocol/radiation" },
+          { label: "紧急疏散程序", href: "/protocol/evacuation" },
+          { label: "权限申请流程", href: "/protocol/access" },
+          { label: "机密等级说明", href: "/protocol/classification" },
+          { label: "违禁物品清单", href: "/protocol/prohibited" },
+        ].map((item) => (
           <li class="mb-2">
-            <a href="#" class="footer-link">{item}</a>
+            <a href={item.href} class="footer-link">{item.label}</a>
           </li>
         ))}
       </ul>
