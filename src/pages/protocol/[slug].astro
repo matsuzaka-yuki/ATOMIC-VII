@@ -155,7 +155,7 @@ const cls = clsColorMap[proto.classificationLevel] ?? clsColorMap.unclassified;
             </div>
             <div class="mt-6 p-4" style="background: rgba(196,30,30,0.1); border: 1px solid var(--color-warning-red-dim);">
               <div class="text-[10px] font-bold tracking-[2px] uppercase mb-2" style="color: var(--color-warning-red);">
-                \u26D4 重要提示
+                ⛔ 重要提示
               </div>
               <p class="text-[11px] leading-[1.7]" style="color: var(--color-text-secondary);">
                 所有安全违规行为将被永久记录在个人安全档案中，作为权限审批、岗位晋升及年度考核的重要参考依据。故意违反安全协议者将被列入观察名单，为期不少于12个月。
@@ -168,7 +168,7 @@ const cls = clsColorMap[proto.classificationLevel] ?? clsColorMap.unclassified;
           <SectionHeader tag="Related Protocols" label="关联协议" />
           <div class="flex flex-col gap-4 mb-8">
             {proto.relatedProtocols.map((rp) => (
-              <div class="metal-panel-bg p-5 flex items-center justify-between gap-4 fade-in">
+              <a href={`/protocol/${rp.slug}`} class="metal-panel-bg p-5 flex items-center justify-between gap-4 fade-in transition-all duration-200" style="text-decoration: none; cursor: pointer;">
                 <div>
                   <div class="font-typewriter text-[11px] mb-1" style="color: var(--color-crt-green-dim);">
                     {rp.code}
@@ -180,7 +180,7 @@ const cls = clsColorMap[proto.classificationLevel] ?? clsColorMap.unclassified;
                 <span class="font-heading text-[10px] tracking-[2px] uppercase" style="color: var(--color-atomic-orange);">
                   →
                 </span>
-              </div>
+              </a>
             ))}
           </div>
 

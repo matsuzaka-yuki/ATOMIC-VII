@@ -20,7 +20,7 @@ export interface ProtocolData {
   sections: ProtocolSection[];
   keyNumbers: Array<{ label: string; value: string }>;
   penalties: string[];
-  relatedProtocols: Array<{ name: string; code: string }>;
+  relatedProtocols: Array<{ name: string; code: string; slug: string }>;
 }
 
 export const securityProtocols: Record<string, ProtocolData> = {
@@ -87,9 +87,9 @@ export const securityProtocols: Record<string, ProtocolData> = {
       "隐瞒辐射事故：立即停职 + 全面调查 + 视情节移交司法",
     ],
     relatedProtocols: [
-      { name: "紧急疏散程序", code: "SP-002" },
-      { name: "生物安全协议", code: "SP-007" },
-      { name: "安全事件报告制度", code: "SP-009" },
+      { name: "紧急疏散程序", code: "SP-002", slug: "evacuation" },
+      { name: "生物安全协议", code: "SP-007", slug: "biosafety" },
+      { name: "安全事件报告制度", code: "SP-009", slug: "incident-report" },
     ],
   },
   evacuation: {
@@ -149,9 +149,9 @@ export const securityProtocols: Record<string, ProtocolData> = {
       "冒用指挥权限发布虚假警报：立即停职 + 全面调查 + 司法移交",
     ],
     relatedProtocols: [
-      { name: "辐射防护守则", code: "SP-001" },
-      { name: "权限等级管理", code: "SP-003" },
-      { name: "武器使用授权", code: "SP-008" },
+      { name: "辐射防护守则", code: "SP-001", slug: "radiation" },
+      { name: "权限申请流程", code: "SP-003", slug: "access" },
+      { name: "武器使用授权", code: "SP-008", slug: "use-of-force" },
     ],
   },
   access: {
@@ -211,9 +211,9 @@ export const securityProtocols: Record<string, ProtocolData> = {
       "隐瞒权限变更事实：纪律处分 + 权限降级 + 审计标记",
     ],
     relatedProtocols: [
-      { name: "外来人员管控", code: "SP-004" },
-      { name: "机密文件处理", code: "SP-006" },
-      { name: "武器使用授权", code: "SP-008" },
+      { name: "外来人员管控", code: "SP-004", slug: "visitor-control" },
+      { name: "机密文件处理", code: "SP-006", slug: "document-handling" },
+      { name: "武器使用授权", code: "SP-008", slug: "use-of-force" },
     ],
   },
   classification: {
@@ -273,9 +273,9 @@ export const securityProtocols: Record<string, ProtocolData> = {
       "故意泄密：立即逮捕 + 军事法庭 + 最高可判死刑",
     ],
     relatedProtocols: [
-      { name: "机密文件处理", code: "SP-006" },
-      { name: "权限等级管理", code: "SP-003" },
-      { name: "外来人员管控", code: "SP-004" },
+      { name: "机密文件处理", code: "SP-006", slug: "document-handling" },
+      { name: "权限申请流程", code: "SP-003", slug: "access" },
+      { name: "外来人员管控", code: "SP-004", slug: "visitor-control" },
     ],
   },
   prohibited: {
@@ -340,9 +340,290 @@ export const securityProtocols: Record<string, ProtocolData> = {
       "篡改或伪造携带许可标签：立即停职 + 调查 + 司法移交",
     ],
     relatedProtocols: [
-      { name: "权限等级管理", code: "SP-003" },
-      { name: "外来人员管控", code: "SP-004" },
-      { name: "辐射防护守则", code: "SP-001" },
+      { name: "权限申请流程", code: "SP-003", slug: "access" },
+      { name: "外来人员管控", code: "SP-004", slug: "visitor-control" },
+      { name: "辐射防护守则", code: "SP-001", slug: "radiation" },
+    ],
+  },
+  "visitor-control": {
+    slug: "visitor-control",
+    name: "外来人员管控",
+    code: "SP-004",
+    icon: "\uD83D\uDC65",
+    classification: "CONFIDENTIAL",
+    classificationLevel: "confidential",
+    tagline: "未经许可者，止步于此",
+    description:
+      "外来人员管控协议规定了外部访客进入ATOMIC-7设施及其周边区域的审批流程、陪同要求、活动范围限制及离场检查程序。该协议适用于所有非在册人员，包括政府官员、承包商、供应商及受邀学者。",
+    effectiveDate: "1957年5月1日",
+    lastRevised: "1961年9月10日",
+    responsible: "安全保卫部 / Col. James Harper",
+    overview:
+      "所有外来人员进入设施外围区域需O3级以上人员批准，进入核心区域需O4级批准并全程由安全人员陪同。访客须在B1层接待大厅完成登记、身份核验与安全培训后，领取临时通行证方可进入授权区域。访客活动全程由指定陪同人员监控，离场时须接受全面检查。",
+    sections: [
+      {
+        title: "访客审批流程",
+        icon: "\uD83D\uDCCB",
+        content: "访客申请须由设施内在册人员作为担保人提交，注明访客身份、来访目的、预计停留时间及需要进入的区域。O3级批准可进入外围区域（地表），O4级批准可进入B1-B2层公共区域，O5级批准方可进入B3层以上研究区域。所有审批须提前至少72小时提交，紧急情况可申请加急审批（最低O4级，24小时处理）。审批通过后，访客信息录入安全系统并生成临时通行证。",
+      },
+      {
+        title: "登记与身份核验",
+        icon: "\uD83D\uDC64",
+        content: "访客抵达后在B1层接待大厅完成以下程序：出示有效身份证件原件，安全人员核验身份并录入系统；拍摄面部照片用于通行证制作；签署《访客安全承诺书》及《保密协议》；接受10分钟安全培训，内容包括紧急疏散路线、禁区标识识别及通讯设备使用规定；领取临时通行证（有效期与批准期限一致，最长7天）。",
+      },
+      {
+        title: "活动范围与陪同要求",
+        icon: "\uD83D\uDCCD",
+        content: "访客活动范围严格限制在通行证注明的授权区域内，不得越界。进入B3层及以上区域须由安全部指定陪同人员全程陪同，陪同比例不低于1:3（每3名访客配1名安全人员）。访客在授权区域内须始终佩戴通行证，不得单独行动，不得使用个人电子设备，不得对设施进行任何形式的拍照或记录。陪同人员有权随时终止访客的访问。",
+      },
+      {
+        title: "离场检查程序",
+        icon: "\u2702",
+        content: "访客离场时须经过以下检查：归还临时通行证（安全部统一销毁），接受随身物品X光扫描确认未携带违禁物品，通过同位素痕迹检测确认未接触放射性物质，安全人员在访客记录上签字确认离场时间。如检查发现异常，访客须配合进一步调查，在调查期间不得离开设施。所有访客记录保留期限不少于10年。",
+      },
+    ],
+    keyNumbers: [
+      { label: "年度访客量", value: "约 340 人" },
+      { label: "平均审批时间", value: "72 小时" },
+      { label: "陪同比例", value: "1:3" },
+      { label: "最长停留", value: "7 天" },
+      { label: "年违规事件", value: "2 次" },
+      { label: "记录保留", value: "10 年" },
+    ],
+    penalties: [
+      "访客越权进入：立即终止访问 + 安全调查 + 列入黑名单",
+      "访客拒不配合检查：终止访问 + 拘留 + 调查",
+      "担保人提供虚假信息：纪律处分 + 暂停担保资格1年",
+      "陪同人员失职：书面警告 + 纪律记录",
+    ],
+    relatedProtocols: [
+      { name: "权限申请流程", code: "SP-003", slug: "access" },
+      { name: "违禁物品清单", code: "SP-005", slug: "prohibited" },
+      { name: "机密文件处理", code: "SP-006", slug: "document-handling" },
+    ],
+  },
+  "document-handling": {
+    slug: "document-handling",
+    name: "机密文件处理",
+    code: "SP-006",
+    icon: "\uD83D\uDCDD",
+    classification: "TOP SECRET",
+    classificationLevel: "top-secret",
+    tagline: "每页纸都是国家机密",
+    description:
+      "机密文件处理协议规定了ATOMIC-7设施内所有密级文件的创建、标记、存储、借阅、传递、复印及销毁的完整管理流程。该协议确保所有涉密信息在整个生命周期内得到有效管控。",
+    effectiveDate: "1957年4月15日",
+    lastRevised: "1961年12月5日",
+    responsible: "信息安全部 / Dr. Elena Vasquez",
+    overview:
+      "设施内现有涉密文件847份，其中绝密级147份、机密级312份、内部级388份。所有文件采用双份存储策略：电子版存储于加密服务器，实物版存放于B2层保险库。绝密文件存放在24个专用保险柜中，借阅需双人认证。文件全生命周期由安全部文档管理系统追踪记录。",
+    sections: [
+      {
+        title: "文件创建与标记",
+        icon: "\u270F",
+        content: "新文件创建时，创建人须根据信息敏感度确定密级并完成标记。页眉标注密级（如TOP SECRET // RESTRICTED ACCESS），页脚标注文件编号（格式：ATM-YYYY-XXX-NNN）、创建日期、分发范围及页码。电子文件须在文件名中包含密级缩写（TS/SC/CF/UC）并在元数据中嵌入完整密级信息。未标记密级的文件一律按内部级别处理。",
+      },
+      {
+        title: "文件存储与借阅",
+        icon: "\uD83D\uDD10",
+        content: "公开文件存放在各部门公共文件柜中。内部文件存放在部门级加密文件柜中，需L2权限访问。机密文件存放在B2层保险库标准柜中，借阅需L3权限+部门主管签字。绝密文件存放在B2层保险库专用柜中，借阅需双人L3认证+安全部部长签字。所有借阅须在登记簿上记录借阅人、借阅时间、归还时间。绝密文件单次借阅不超过4小时，且须在指定阅读区内阅读。",
+      },
+      {
+        title: "文件传递与复印",
+        icon: "\uD83D\uDCE7",
+        content: "机密及以上文件传递必须使用安全部加密信使服务，严禁通过普通邮件或非安全电子通道传递。绝密文件传递须使用O5级加密通道，传递全程由安全人员护送。文件复印：内部文件复印需部门主管批准；机密文件复印需安全部批准，复印件与原件同密级管理；绝密文件原则上禁止复印，特殊情况需所长书面批准。所有复印操作须在安全部指定复印机上进行，自动记录复印份数。",
+      },
+      {
+        title: "文件销毁与清点",
+        icon: "\uD83D\uDD25",
+        content: "文件销毁分为常规销毁和紧急销毁。常规销毁：内部文件使用碎纸机（横切4mm），机密文件使用碎纸机（横切2mm），绝密文件使用碎纸机（横切1mm）+ 化学溶解 + 焚烧。紧急销毁：在DEFCON-2及以上级别警报时，启动批量销毁程序，使用保险库内置焚烧炉集中销毁全部文件。绝密文件每季度进行一次清点核查，发现缺失立即启动调查。",
+      },
+    ],
+    keyNumbers: [
+      { label: "涉密文件总量", value: "847 份" },
+      { label: "绝密文件", value: "147 份" },
+      { label: "保险柜", value: "24 个" },
+      { label: "季度清点", value: "100%" },
+      { label: "指定阅读区", value: "3 间" },
+      { label: "年度泄密事件", value: "0 次" },
+    ],
+    penalties: [
+      "未按规定标记文件密级：书面警告 + 强制培训",
+      "擅自复印绝密文件：立即停职 + 调查 + 司法移交",
+      "丢失涉密文件：立即停职 + 全面调查 + 纪律处分",
+      "通过非安全渠道传递机密文件：暂停权限 + 纪律处分",
+      "故意泄密：立即逮捕 + 军事法庭",
+    ],
+    relatedProtocols: [
+      { name: "机密等级说明", code: "SP-004", slug: "classification" },
+      { name: "权限申请流程", code: "SP-003", slug: "access" },
+      { name: "外来人员管控", code: "SP-004", slug: "visitor-control" },
+    ],
+  },
+  biosafety: {
+    slug: "biosafety",
+    name: "生物安全协议",
+    code: "SP-007",
+    icon: "\uD83E\uDDEA",
+    classification: "SECRET",
+    classificationLevel: "secret",
+    tagline: "微观世界的防线",
+    description:
+      "生物安全协议规定了ATOMIC-7设施内所有涉及生物材料的实验、储存、运输及废弃处理的安全要求。该协议基于BSL-2至BSL-4生物安全等级标准制定，特别针对辐射环境下的微生物变异研究设置了额外的安全措施。",
+    effectiveDate: "1958年1月15日",
+    lastRevised: "1962年1月22日",
+    responsible: "辐射医学部 / Dr. Li Wei-Ming",
+    overview:
+      "设施内设有BSL-2实验室8间、BSL-3实验室4间、BSL-4实验室2间。所有生物安全实验室位于B3层，配备独立通风系统、三道消毒程序及气压监控。B3层生态实验室因凤凰蕨基因变异事件已被临时列为BSL-4管控区域。所有实验人员须持有生物安全许可证并通过年度体检。",
+    sections: [
+      {
+        title: "生物安全等级要求",
+        icon: "\uD83C\uDFE5",
+        content: "BSL-2实验室：处理低危害微生物，需基础防护设备（实验服、手套、护目镜），实验台配备生物安全柜。BSL-3实验室：处理中度危害微生物，需全面防护（正压防护服、呼吸面罩），实验室内维持负压环境，进出须经气闸室。BSL-4实验室：处理高危害微生物，需最高级别防护（全封闭正压防护服、独立供氧系统），双重气闸门，化学淋浴消毒。所有BSL-3及以上实验室进出须经过三道消毒程序。",
+      },
+      {
+        title: "生物材料进出管理",
+        icon: "\uD83D\uDEAB",
+        content: "所有生物样本进出设施须经过安全部审批。外部样本进入前须在B1层洗消通道接受三道消毒：化学喷淋（次氯酸钠溶液）、紫外线照射（剂量不低于200J/m\u00B2）、气压平衡舱（停留时间15分钟）。内部样本跨楼层转移须使用密封生物转运箱，转运箱须经紫外线消毒后方可打开。B3层凤凰蕨相关样本转移须使用专用加强密封箱，并提前通知安全部安排武装押运。",
+      },
+      {
+        title: "实验操作安全规范",
+        icon: "\uD83D\uDD27",
+        content: "所有涉及活体微生物的操作须在生物安全柜内进行。BSL-3及以上实验室禁止使用锐器（注射器、手术刀等），如必须使用须采用安全型产品。实验废弃物须立即放入生物危害废物袋中，每日集中处理。实验人员出现发热、皮疹等异常症状须立即报告并接受医学检查。B3层生态实验室人员须额外接受辐射剂量检测。",
+      },
+      {
+        title: "生物废物处理",
+        icon: "\u2620",
+        content: "BSL-2废物经高压蒸汽灭菌（121\u00B0C，30分钟）后按普通医疗废物处理。BSL-3废物经高压蒸汽灭菌（134\u00B0C，60分钟）后焚毁。BSL-4废物经化学消毒+高压蒸汽灭菌双重处理后焚毁。所有废液须经含氯消毒剂处理（有效氯浓度不低于2000mg/L）后方可排入废水系统。生物安全柜每年进行一次过滤器完整性检测。",
+      },
+    ],
+    keyNumbers: [
+      { label: "生物安全实验室", value: "14 间" },
+      { label: "消毒程序", value: "3 道" },
+      { label: "生物安全柜", value: "18 台" },
+      { label: "持证人员", value: "89 人" },
+      { label: "年度事故", value: "0 次" },
+      { label: "过滤器检测", value: "年度" },
+    ],
+    penalties: [
+      "未在安全柜内操作活体微生物：书面警告 + 强制重新培训",
+      "擅自将生物样本带出实验室：暂停权限 + 纪律处分 + 医学检查",
+      "未经审批引入外部生物样本：没收样本 + 纪律处分",
+      "隐瞒生物安全事故：立即停职 + 调查 + 视情节移交司法",
+    ],
+    relatedProtocols: [
+      { name: "辐射防护守则", code: "SP-001", slug: "radiation" },
+      { name: "紧急疏散程序", code: "SP-002", slug: "evacuation" },
+      { name: "安全事件报告制度", code: "SP-009", slug: "incident-report" },
+    ],
+  },
+  "use-of-force": {
+    slug: "use-of-force",
+    name: "武器使用授权",
+    code: "SP-008",
+    icon: "\uD83D\uDEE1",
+    classification: "TOP SECRET",
+    classificationLevel: "top-secret",
+    tagline: "武力是最后的手段",
+    description:
+      "武器使用授权协议规定了ATOMIC-7安全保卫人员在执勤过程中使用武力的条件、程序、限制及报告要求。该协议严格遵循最低武力原则，明确各级武力使用的授权层级与适用场景。",
+    effectiveDate: "1957年6月15日",
+    lastRevised: "1961年10月18日",
+    responsible: "安全保卫部 / Col. James Harper",
+    overview:
+      "设施安全保卫力量包括武装警卫48人、安全巡逻队12组及快速反应小组2组。武器库存放有轻武器、非致命性武器及T-51装甲4套。所有安全人员须完成季度武器使用训练并通过考核。武器使用分为口头警告、非致命武力、致命武力三个等级，逐级升级。",
+    sections: [
+      {
+        title: "武力使用等级",
+        icon: "\u2696",
+        content: "第一级-口头警告：适用于可疑人员接近设施、人员拒不配合检查等非紧急情况。安全人员须清晰发出至少3次口头警告后方可升级武力。第二级-非致命武力：适用于口头警告无效、人员实施暴力抵抗等情况。可使用手段包括电击枪、催泪瓦斯、防暴棍及物理约束。使用前须获值班指挥官口头授权。第三级-致命武力：仅限于武装入侵、核材料盗窃、恐怖袭击等极端情况。使用前须获值班指挥官明确授权或面临即刻生命威胁时可先使用后报告。",
+      },
+      {
+        title: "武器配备与管理",
+        icon: "\uD83D\uDD2B",
+        content: "巡逻岗哨配备：手枪1把（含3个弹匣）、电击枪1把、对讲机1部、手铐1副。快速反应小组配备：突击步枪1把、霰弹枪1把、防暴盾1面、防弹衣1套。值班指挥官配备：手枪1把、加密通讯终端1部、指挥权限卡1张。所有武器在非执勤时间须存放在B1层武器库双人锁保险柜中，领用须登记签名。弹药消耗须在当班结束后清点核实。",
+      },
+      {
+        title: "使用后报告程序",
+        icon: "\uD83D\uDCDD",
+        content: "任何武力使用（含拔枪未射击）须在事件发生后1小时内向值班指挥官提交口头报告，4小时内提交书面报告。致命武力使用须在30分钟内通知所长及安全部总部。所有报告须包含：事件时间、地点、涉事人员、武力使用等级、使用原因、使用过程、结果及伤亡情况。安全部在24小时内完成初步调查，72小时内提交完整调查报告。涉及致命武力的调查报告须抄送所长办公室。",
+      },
+    ],
+    keyNumbers: [
+      { label: "武装警卫", value: "48 人" },
+      { label: "巡逻小组", value: "12 组" },
+      { label: "快速反应组", value: "2 组" },
+      { label: "年度训练", value: "4 次" },
+      { label: "武力使用/年", value: "0 次" },
+      { label: "报告时效", value: "4 小时" },
+    ],
+    penalties: [
+      "未经授权使用武器：立即停职 + 调查 + 视情节移交军事法庭",
+      "未按规定提交武力使用报告：书面警告 + 纪律记录",
+      "武器管理不善（丢失/损坏）：严重纪律处分 + 赔偿",
+      "过度使用武力：停职 + 调查 + 军事法庭",
+    ],
+    relatedProtocols: [
+      { name: "紧急疏散程序", code: "SP-002", slug: "evacuation" },
+      { name: "权限申请流程", code: "SP-003", slug: "access" },
+      { name: "违禁物品清单", code: "SP-005", slug: "prohibited" },
+    ],
+  },
+  "incident-report": {
+    slug: "incident-report",
+    name: "安全事件报告制度",
+    code: "SP-009",
+    icon: "\uD83D\uDCCB",
+    classification: "CONFIDENTIAL",
+    classificationLevel: "confidential",
+    tagline: "不报告就是同谋",
+    description:
+      "安全事件报告制度规定了ATOMIC-7设施内各类安全事件的发现、报告、调查、处理及归档的完整流程。该制度适用于所有在册人员，要求任何人员发现或怀疑安全事件时必须立即报告。",
+    effectiveDate: "1957年4月20日",
+    lastRevised: "1962年2月10日",
+    responsible: "安全保卫部 / Sgt. Major Williams",
+    overview:
+      "安全事件分为五个类别：入侵事件、辐射异常、权限违规、设备故障、人员失踪。所有事件按严重程度分为三级：一般（影响局部，可现场处置）、重大（影响整层或多层，需协调处置）、严重（影响全设施，需启动应急程序）。事件报告可通过分机7700（24小时）、内部通讯终端紧急按钮或当面报告三种方式提交。",
+    sections: [
+      {
+        title: "事件分类与定级",
+        icon: "\uD83C\uDFAF",
+        content: "入侵事件：未经授权进入设施或受限区域。辐射异常：辐射监测数据超过预设阈值。权限违规：使用过期/伪造权限进入受限区域、越权操作等。设备故障：影响安全的设施设备故障。人员失踪：在册人员失去联系超过规定时间。定级标准：一般事件（单区域影响、无人员伤亡、可2小时内处置）、重大事件（多层影响、可能有人员伤亡、需4小时以上处置）、严重事件（全设施影响、已有人员伤亡、需启动DEFCON协议）。",
+      },
+      {
+        title: "报告流程与时限",
+        icon: "\u23F0",
+        content: "发现事件后：一般事件须在30分钟内报告值班安全员；重大事件须在15分钟内报告值班指挥官；严重事件须在5分钟内报告值班指挥官并触发警报。报告内容须包括：发现时间、事件地点、事件描述、涉及人员、已采取的措施。口头报告后4小时内须提交书面报告。安全部在接到报告后15分钟内派出响应小组。调查期间所有相关区域监控录像自动锁定保存。",
+      },
+      {
+        title: "调查与处理",
+        icon: "\uD83D\uDD0D",
+        content: "一般事件由值班安全员负责调查，24小时内提交调查报告。重大事件由安全部成立专项调查组，72小时内提交初步报告，7天内提交完整报告。严重事件由安全部会同所长办公室联合调查，24小时内提交初步报告，14天内提交完整报告。调查报告须包含：事件经过还原、原因分析、责任认定、改进建议。所有调查报告永久存档。事件责任人的处理由人事部在调查报告完成后5个工作日内执行。",
+      },
+      {
+        title: "举报人保护",
+        icon: "\uD83D\uDEE1",
+        content: "安全部对所有举报人身份严格保密，举报记录采用加密存储、双人访问控制。任何人不得对举报人进行报复，违者将受到最严厉的纪律处分。举报属实者可获得安全部颁发的安全贡献奖，年度安全贡献奖获得者将获得额外安全津贴。匿名举报可通过B1层举报箱（位于安检区出口旁）提交。",
+      },
+    ],
+    keyNumbers: [
+      { label: "事件类别", value: "5 类" },
+      { label: "严重等级", value: "3 级" },
+      { label: "报告热线", value: "分机7700" },
+      { label: "年事件数", value: "约 47 件" },
+      { label: "平均响应", value: "<15 分钟" },
+      { label: "归档保留", value: "永久" },
+    ],
+    penalties: [
+      "发现事件未及时报告：书面警告 + 纪律记录",
+      "隐瞒安全事件：严重纪律处分 + 停职调查",
+      "伪造或篡改事件报告：立即停职 + 调查 + 司法移交",
+      "对举报人进行报复：立即停职 + 降级处理 + 移交司法",
+    ],
+    relatedProtocols: [
+      { name: "辐射防护守则", code: "SP-001", slug: "radiation" },
+      { name: "生物安全协议", code: "SP-007", slug: "biosafety" },
+      { name: "紧急疏散程序", code: "SP-002", slug: "evacuation" },
     ],
   },
 };
