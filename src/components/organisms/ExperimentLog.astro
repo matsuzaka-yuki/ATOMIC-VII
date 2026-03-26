@@ -2,7 +2,6 @@
 import SectionHeader from "../molecules/SectionHeader.astro";
 import LogEntry from "../molecules/LogEntry.astro";
 import ArtDecoDivider from "../atoms/ArtDecoDivider.astro";
-import VacuumTube from "../atoms/VacuumTube.astro";
 import type { ExperimentLog } from "../../data/archives";
 
 interface Props {
@@ -21,11 +20,4 @@ const { logs } = Astro.props;
     ))}
   </div>
 
-  <div class="flex justify-center gap-6 mt-10">
-    <VacuumTube />
-    <VacuumTube />
-    <VacuumTube />
-    <VacuumTube />
-    <VacuumTube />
-  </div>
-</section>
+  </section>

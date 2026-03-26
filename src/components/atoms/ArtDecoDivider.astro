@@ -1,18 +1,4 @@
 ---
-interface Props {
-  diamonds?: 1 | 2 | 3;
-}
-
-const { diamonds = 2 } = Astro.props;
 ---
 
-<div class="flex items-center h-[3px]" style="background: var(--color-border-metal);">
-  <div class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, var(--color-atomic-orange-dim), transparent);"></div>
-  {Array.from({ length: diamonds }).map(() => (
-    <div
-      class="w-3 h-3 shrink-0"
-      style="background: var(--color-atomic-orange); transform: rotate(45deg) translateY(-4px); box-shadow: 0 0 8px rgba(232,101,26,0.5);"
-    ></div>
-  ))}
-  <div class="flex-1 h-px" style="background: linear-gradient(90deg, transparent, var(--color-atomic-orange-dim), transparent);"></div>
-</div>
+<div class="h-px" style="background: linear-gradient(90deg, transparent, var(--color-atomic-orange-dim), transparent);"></div>

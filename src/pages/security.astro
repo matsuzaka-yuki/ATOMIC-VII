@@ -4,7 +4,6 @@ import Breadcrumb from "../components/molecules/Breadcrumb.astro";
 import SectionHeader from "../components/molecules/SectionHeader.astro";
 import MetalPanel from "../components/molecules/MetalPanel.astro";
 import ArtDecoDivider from "../components/atoms/ArtDecoDivider.astro";
-import VacuumTube from "../components/atoms/VacuumTube.astro";
 import { protocols, clearanceLevels, incidents, personnelDB, prohibitedItems } from "../data/security";
 
 const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
@@ -77,9 +76,6 @@ const classificationLabelMap: Record<string, string> = {
     </div>
   </section>
 
-  <div class="flex justify-center gap-6 my-8">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
 
   <!-- Security Protocols -->
   <section class="py-16 px-6 fade-in">
@@ -116,10 +112,6 @@ const classificationLabelMap: Record<string, string> = {
     </div>
   </section>
 
-  <div class="flex justify-center gap-6 my-8">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
-
   <!-- Clearance Levels -->
   <section class="py-16 px-6 security-clearance-section fade-in">
     <div class="text-center mb-12">
@@ -154,9 +146,6 @@ const classificationLabelMap: Record<string, string> = {
     </div>
   </section>
 
-  <div class="flex justify-center gap-6 my-8">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
 
   <!-- Incident Log -->
   <section class="py-16 px-6 fade-in">
@@ -189,9 +178,6 @@ const classificationLabelMap: Record<string, string> = {
     </div>
   </section>
 
-  <div class="flex justify-center gap-6 my-8">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
 
   <!-- Personnel Scanner -->
   <section class="py-16 px-6 scanner-section fade-in">
@@ -269,9 +255,6 @@ const classificationLabelMap: Record<string, string> = {
     </div>
   </section>
 
-  <div class="flex justify-center gap-6 my-8">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
 
   <!-- Prohibited Items -->
   <section class="py-16 px-6 fade-in">
@@ -309,10 +292,6 @@ const classificationLabelMap: Record<string, string> = {
       </div>
     </div>
   </section>
-
-  <div class="flex justify-center gap-6 my-8">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
 </Layout>
 
 <script define:vars={{ personnelDB: JSON.stringify(personnelDB) }}>

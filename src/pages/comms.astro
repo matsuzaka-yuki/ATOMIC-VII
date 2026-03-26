@@ -58,11 +58,6 @@ const statusDotMap: Record<string, string> = { online: "green", weak: "orange", 
 
     <div class="cmp-divider fade-in">
       <div class="line"></div>
-      <div class="diamond"></div>
-      <div class="dot"></div>
-      <div class="diamond"></div>
-      <div class="dot"></div>
-      <div class="diamond"></div>
       <div class="line"></div>
     </div>
 
@@ -105,10 +100,6 @@ const statusDotMap: Record<string, string> = { online: "green", weak: "orange", 
       </div>
     </section>
 
-    <div class="cmp-tube-row fade-in">
-      <div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div>
-    </div>
-
     <!-- Analog Gauge Dashboard -->
     <section class="cmp-section fade-in">
       <div class="cmp-section-header">
@@ -136,62 +127,7 @@ const statusDotMap: Record<string, string> = { online: "green", weak: "orange", 
 
     <div class="cmp-divider fade-in">
       <div class="line"></div>
-      <div class="diamond"></div>
-      <div class="dot"></div>
-      <div class="diamond"></div>
-      <div class="dot"></div>
-      <div class="diamond"></div>
       <div class="line"></div>
-    </div>
-
-    <!-- Emergency Broadcast Console -->
-    <section class="cmp-section fade-in">
-      <div class="cmp-section-header">
-        <h2 class="cmp-section-title">紧急广播系统</h2>
-        <div class="cmp-section-tag">EMERGENCY BROADCAST // AUTHORIZED ONLY</div>
-      </div>
-
-      <div class="cmp-emergency-frame">
-        <div class="cmp-warning-stripe"></div>
-        <div class="cmp-emergency-title">⚠ 紧急广播系统 ⚠</div>
-
-        <div class="cmp-broadcast-list">
-          <div class="cmp-broadcast-item">
-            <span class="cmp-broadcast-name">🚨 全设施疏散警报</span>
-            <button class="cmp-broadcast-btn">发送广播</button>
-          </div>
-          <div class="cmp-broadcast-item">
-            <span class="cmp-broadcast-name">☢️ 辐射泄漏警告</span>
-            <button class="cmp-broadcast-btn">发送广播</button>
-          </div>
-          <div class="cmp-broadcast-item">
-            <span class="cmp-broadcast-name">🔒 安全封锁通知</span>
-            <button class="cmp-broadcast-btn orange">发送广播</button>
-          </div>
-          <div class="cmp-broadcast-item">
-            <span class="cmp-broadcast-name">🎯 外部入侵警报</span>
-            <button class="cmp-broadcast-btn">发送广播</button>
-          </div>
-          <div class="cmp-broadcast-item">
-            <span class="cmp-broadcast-name">🔧 系统维护公告</span>
-            <button class="cmp-broadcast-btn orange">发送广播</button>
-          </div>
-        </div>
-
-        <div>
-          <div style="font-size: 10px; color: var(--color-text-secondary); letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase;">自定义广播内容 [终端输入]</div>
-          <textarea class="cmp-terminal-textarea" placeholder={"> 在此输入自定义广播内容...\n> 支持多行文本\n> 发送后将广播至所有在线频道"}></textarea>
-        </div>
-
-        <div class="cmp-broadcast-actions">
-          <button class="cmp-btn-secondary">清除内容</button>
-          <button class="cmp-broadcast-btn" style="padding: 8px 24px; font-size: 11px;">▶ 发送自定义广播</button>
-        </div>
-      </div>
-    </section>
-
-    <div class="cmp-tube-row fade-in">
-      <div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div>
     </div>
   </div>
 </Layout>

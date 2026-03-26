@@ -3,7 +3,6 @@ import Layout from "../components/layouts/Layout.astro";
 import Breadcrumb from "../components/molecules/Breadcrumb.astro";
 import ArtDecoDivider from "../components/atoms/ArtDecoDivider.astro";
 import MetalPanel from "../components/molecules/MetalPanel.astro";
-import VacuumTube from "../components/atoms/VacuumTube.astro";
 import { utilities } from "../data/map";
 
 const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
@@ -53,9 +52,6 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
             <div class="utility-detail">{u.detail}</div>
           </div>
         ))}
-        <div class="flex justify-center gap-6 mt-2">
-          <VacuumTube /><VacuumTube /><VacuumTube />
-        </div>
       </div>
 
       <div class="bunker-map">
@@ -187,15 +183,11 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
             </div>
           </div>
         </MetalPanel>
-
-        <div class="flex justify-center gap-6 mt-2">
-          <VacuumTube /><VacuumTube /><VacuumTube />
-        </div>
       </div>
     </div>
   </section>
 
-  <ArtDecoDivider diamonds={2} />
+  <ArtDecoDivider />
 
   <section class="emergency-section">
     <div class="emergency-container">
@@ -237,7 +229,7 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
     </div>
   </section>
 
-  <ArtDecoDivider diamonds={2} />
+  <ArtDecoDivider />
 
   <section class="clearance-section">
     <div class="clearance-container metal-panel-bg fade-in">
