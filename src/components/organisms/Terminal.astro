@@ -70,44 +70,70 @@
     },
   ];
 
-  let lineIndex = 0;
-  const terminalBody = document.getElementById("terminal-body");
   const MAX_CHILDREN = 15;
+  let lineIndex = 0;
+  let running = false;
+  let cancelled = false;
 
-  function sleep(ms: number): Promise<void> {
-    return new Promise((r) => setTimeout(r, ms));
+  function getBody(): HTMLElement | null {
+    return document.getElementById("terminal-body");
   }
 
-  function removeOldest() {
-    while (terminalBody && terminalBody.children.length > MAX_CHILDREN) {
-      terminalBody.removeChild(terminalBody.firstChild!);
+  function sleep(ms: number): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const id = setTimeout(() => {
+        pendingSleeps.delete(id);
+        resolve();
+      }, ms);
+      pendingSleeps.add(id);
+    });
+  }
+
+  const pendingSleeps = new Set<ReturnType<typeof setTimeout>>();
+
+  function clearAllTimers() {
+    cancelled = true;
+    running = false;
+    pendingSleeps.forEach((id) => clearTimeout(id));
+    pendingSleeps.clear();
+  }
+
+  function removeOldest(body: HTMLElement) {
+    while (body.children.length > MAX_CHILDREN) {
+      body.removeChild(body.firstChild!);
     }
   }
 
-  function scrollToBottom() {
-    if (terminalBody) terminalBody.scrollTop = terminalBody.scrollHeight;
+  function scrollToBottom(body: HTMLElement) {
+    body.scrollTop = body.scrollHeight;
   }
 
-  function getCursor(): HTMLElement | null {
-    const cursors = terminalBody?.querySelectorAll(".terminal-cursor");
-    if (!cursors || cursors.length === 0) return null;
+  function getCursor(body: HTMLElement): HTMLElement | null {
+    const cursors = body.querySelectorAll(".terminal-cursor");
+    if (cursors.length === 0) return null;
     return cursors[cursors.length - 1] as HTMLElement;
   }
 
-  async function typeCommand(cmd: string): Promise<void> {
-    const cursor = getCursor();
-    if (!cursor) return;
+  async function typeCommand(cmd: string): Promise<boolean> {
+    const body = getBody();
+    if (!body || cancelled) return false;
+    const cursor = getCursor(body);
+    if (!cursor) return false;
 
     for (let i = 0; i < cmd.length; i++) {
+      if (cancelled) return false;
       cursor.insertAdjacentText("beforebegin", cmd[i]);
-      scrollToBottom();
+      scrollToBottom(body);
       await sleep(50);
     }
+    return true;
   }
 
-  function showOutput(text: string): void {
-    const cursor = getCursor();
-    if (!cursor || !terminalBody) return;
+  function showOutput(text: string): boolean {
+    const body = getBody();
+    if (!body || cancelled) return false;
+    const cursor = getCursor(body);
+    if (!cursor) return false;
 
     const line = cursor.parentElement!;
     const outputDiv = document.createElement("div");
@@ -120,28 +146,55 @@
     newLine.innerHTML = '<span class="terminal-prompt">C:\\ATOMIC7&gt;</span> <span id="terminal-cursor" class="terminal-cursor"></span>';
     outputDiv.after(newLine);
 
-    removeOldest();
-    scrollToBottom();
+    removeOldest(body);
+    scrollToBottom(body);
+    return true;
   }
 
   async function runSequence() {
-    const start = lineIndex % terminalLines.length;
-    const count = Math.min(terminalLines.length, 7);
+    if (running) return;
+    running = true;
 
-    for (let i = 0; i < count; i++) {
-      const idx = (start + i) % terminalLines.length;
-      const item = terminalLines[idx];
-      await typeCommand(item.cmd);
-      await sleep(800);
-      showOutput(item.output);
-      await sleep(2500);
+    while (!cancelled) {
+      const start = lineIndex % terminalLines.length;
+      const count = Math.min(terminalLines.length, 7);
+
+      for (let i = 0; i < count; i++) {
+        if (cancelled) break;
+        const idx = (start + i) % terminalLines.length;
+        const item = terminalLines[idx];
+        if (!(await typeCommand(item.cmd))) break;
+        if (cancelled) break;
+        await sleep(800);
+        if (!showOutput(item.output)) break;
+        if (cancelled) break;
+        await sleep(2500);
+      }
+
+      lineIndex += count;
+      if (!cancelled) await sleep(2000);
     }
 
-    lineIndex += count;
-    setTimeout(runSequence, 2000);
+    running = false;
   }
 
-  setTimeout(runSequence, 2000);
+  function resetTerminal() {
+    const body = getBody();
+    if (!body) return;
+    body.innerHTML = '<div class="terminal-line" id="terminal-start"><span class="terminal-prompt">C:\\ATOMIC7&gt;</span><span id="terminal-cursor" class="terminal-cursor"></span></div>';
+  }
+
+  document.addEventListener("astro:before-swap", () => {
+    clearAllTimers();
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    clearAllTimers();
+    cancelled = false;
+    lineIndex = 0;
+    resetTerminal();
+    runSequence();
+  });
 </script>
 
 <style is:global>
