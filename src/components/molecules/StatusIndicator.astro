@@ -1,0 +1,15 @@
+---
+import StatusDot from "../atoms/StatusDot.astro";
+
+interface Props {
+  color?: "green" | "orange" | "red";
+  label: string;
+}
+
+const { color = "green", label } = Astro.props;
+---
+
+<div class="flex items-center gap-1.5 text-[11px]" style="color: var(--color-text-secondary);">
+  <StatusDot color={color} size="sm" />
+  <span>{label}</span>
+</div>

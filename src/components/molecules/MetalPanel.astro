@@ -1,0 +1,19 @@
+---
+import Rivet from "../atoms/Rivet.astro";
+
+interface Props {
+  class?: string;
+  tag?: string;
+}
+
+const { class: className = "", tag = "div" } = Astro.props;
+const Tag = tag as any;
+---
+
+<Tag class={`metal-panel-bg ${className}`}>
+  <Rivet position="tl" />
+  <Rivet position="tr" />
+  <Rivet position="bl" />
+  <Rivet position="br" />
+  <slot />
+</Tag>

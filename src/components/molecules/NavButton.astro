@@ -1,0 +1,25 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  active?: boolean;
+}
+
+const { href, label, active = false } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "clip-nav inline-block font-mono text-xs tracking-[2px] uppercase px-5 py-2.5 relative nav-btn-base",
+    active && "nav-btn-active",
+  ]}
+>
+  {label}
+  {active && (
+    <span
+      class="absolute bottom-[-3px] left-[20%] right-[20%] h-0.5"
+      style="background: var(--color-crt-green); box-shadow: 0 0 8px var(--color-crt-green);"
+    ></span>
+  )}
+</a>

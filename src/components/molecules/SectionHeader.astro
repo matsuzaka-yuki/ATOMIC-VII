@@ -1,0 +1,26 @@
+---
+interface Props {
+  tag?: string;
+  label: string;
+  title?: string;
+}
+
+const { tag = "核心研究领域", label, title } = Astro.props;
+---
+
+  <div class="text-center mb-[60px] fade-in">
+  <div
+    class="inline-flex items-center gap-2 text-[11px] tracking-[4px] uppercase mb-4"
+    style="color: var(--color-atomic-orange);"
+  >
+    <span class="block w-10 h-px" style="background: linear-gradient(90deg, transparent, var(--color-atomic-orange));"></span>
+    <span>{tag}</span>
+    <span class="block w-10 h-px" style="background: linear-gradient(90deg, var(--color-atomic-orange), transparent);"></span>
+  </div>
+  <h2
+    class="font-heading text-5xl font-bold uppercase tracking-[4px] section-title-responsive"
+    style="color: var(--color-text-primary);"
+  >
+    {title || label}
+  </h2>
+</div>
