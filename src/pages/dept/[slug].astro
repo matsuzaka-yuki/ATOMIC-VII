@@ -1,0 +1,199 @@
+---
+import Layout from "../../components/layouts/Layout.astro";
+import Breadcrumb from "../../components/molecules/Breadcrumb.astro";
+import SectionHeader from "../../components/molecules/SectionHeader.astro";
+import ArtDecoDivider from "../../components/atoms/ArtDecoDivider.astro";
+import MetalPanel from "../../components/molecules/MetalPanel.astro";
+import { departments, statusConfig, clearanceLabels } from "../../data/departments";
+
+export function getStaticPaths() {
+  return Object.values(departments).map((dept) => ({
+    params: { slug: dept.slug },
+    props: { dept },
+  }));
+}
+
+const { dept } = Astro.props;
+const breadcrumbItems = [
+  { label: "ATOMIC-7", href: "/" },
+  { label: "研究部门", href: "/" },
+];
+---
+
+<Layout title={`ATOMIC-7 // ${dept.name}`} currentPath={`/dept/${dept.slug}`}>
+  <Breadcrumb items={breadcrumbItems} current={dept.name} />
+
+  <section class="py-16 px-6 relative">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="flex flex-col lg:flex-row gap-8 mb-16 fade-in">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-4xl">{dept.icon}</span>
+            <div>
+              <div class="font-heading text-[11px] tracking-[3px] uppercase" style="color: var(--color-atomic-orange);">
+                {dept.code} // {dept.location}
+              </div>
+              <h1 class="font-heading text-4xl md:text-5xl font-bold uppercase tracking-[4px]" style="color: var(--color-text-primary);">
+                {dept.name}
+              </h1>
+            </div>
+          </div>
+          <p class="font-typewriter text-sm mb-6" style="color: var(--color-atomic-orange); letter-spacing: 2px;">
+            "{dept.tagline}"
+          </p>
+          <p class="text-[13px] leading-[1.8] mb-6" style="color: var(--color-text-secondary);">
+            {dept.description}
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <span class="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] tracking-[2px] uppercase" style="background: rgba(232,101,26,0.1); border: 1px solid var(--color-atomic-orange-dim); color: var(--color-atomic-orange);">
+              成立于 {dept.founded}
+            </span>
+            <span class="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] tracking-[2px] uppercase" style="background: rgba(51,255,102,0.05); border: 1px solid rgba(51,255,102,0.15); color: var(--color-crt-green);">
+              人员 {dept.headCount} 人
+            </span>
+            <span class={`inline-flex items-center gap-2 px-3 py-1.5 text-[10px] tracking-[2px] uppercase clearance-badge ${clearanceLabels[dept.clearanceLevel]?.class ?? "cls-l1"}`}>
+              {clearanceLabels[dept.clearanceLevel]?.label ?? `L${dept.clearanceLevel}`}
+            </span>
+          </div>
+        </div>
+        <div class="lg:w-[400px] flex-shrink-0">
+          <MetalPanel class="p-6">
+            <h3 class="font-heading text-sm font-semibold uppercase tracking-[2px] mb-5 pb-2" style="color: var(--color-text-primary); border-bottom: 1px solid var(--color-border-metal);">
+              核心数据
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              {dept.stats.map((stat) => (
+                <div class="text-center p-3" style="background: rgba(26,24,20,0.6); border: 1px solid var(--color-border-metal);">
+                  <div class="font-heading text-xl font-bold text-glow-green" style="color: var(--color-crt-green);">
+                    {stat.value}
+                  </div>
+                  <div class="text-[10px] tracking-[1px] uppercase mt-1" style="color: var(--color-text-secondary);">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MetalPanel>
+        </div>
+      </div>
+
+      <ArtDecoDivider />
+
+      <SectionHeader tag="Research Objectives" label="核心研究目标" />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1200px] mx-auto mb-8">
+        {dept.objectives.map((obj, i) => (
+          <div class="metal-panel-bg p-5 fade-in" style="transition-delay: {i * 100}ms;">
+            <div class="flex items-start gap-3">
+              <span class="font-heading text-lg font-bold flex-shrink-0" style="color: var(--color-atomic-orange);">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <p class="text-[12px] leading-[1.7]" style="color: var(--color-text-secondary);">
+                {obj}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <ArtDecoDivider />
+
+      <SectionHeader tag="Active Projects" label="在研项目" />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto mb-8">
+        {dept.projects.map((project) => {
+          const status = statusConfig[project.status];
+          return (
+            <div class="metal-panel-bg p-6 fade-in">
+              <div class="flex justify-between items-start mb-4 gap-3">
+                <div>
+                  <div class="font-typewriter text-[11px] mb-1" style="color: var(--color-crt-green-dim);">
+                    {project.id}
+                  </div>
+                  <h4 class="font-heading text-lg font-semibold uppercase tracking-[1px]" style="color: var(--color-text-primary);">
+                    {project.name}
+                  </h4>
+                </div>
+                <span class={`log-status text-[10px] font-bold tracking-[2px] uppercase px-3 py-1 flex-shrink-0 ${status?.class ?? ""}`}>
+                  {status?.label ?? project.status}
+                </span>
+              </div>
+              <p class="text-[12px] leading-[1.7] mb-4" style="color: var(--color-text-secondary);">
+                {project.description}
+              </p>
+              <div class="mt-auto">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-[10px] tracking-[1px] uppercase" style="color: var(--color-text-secondary);">
+                    进度
+                  </span>
+                  <span class="font-heading text-sm font-bold text-glow-green" style="color: var(--color-crt-green);">
+                    {project.progress}%
+                  </span>
+                </div>
+                <div class="h-2 relative" style="background: var(--color-bg-dark); border: 1px solid var(--color-border-metal);">
+                  <div
+                    class="h-full fill-green"
+                    style={`width: ${project.progress}%;`}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <ArtDecoDivider />
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <SectionHeader tag="Key Personnel" label="核心人员" />
+          <div class="flex flex-col gap-4">
+            {dept.staff.map((person) => (
+              <div class="metal-panel-bg p-5 fade-in">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 flex-shrink-0 flex items-center justify-center" style="background: var(--color-bg-panel-light); border: 1px solid var(--color-border-metal);">
+                    <span class="font-heading text-sm font-bold" style="color: var(--color-atomic-orange);">
+                      {person.name.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 class="font-heading text-sm font-semibold uppercase tracking-[1px]" style="color: var(--color-text-primary);">
+                      {person.name}
+                    </h4>
+                    <div class="text-[10px] tracking-[1px] uppercase mb-1" style="color: var(--color-atomic-orange);">
+                      {person.title}
+                    </div>
+                    <div class="text-[11px]" style="color: var(--color-text-secondary);">
+                      专长：{person.role}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <SectionHeader tag="Milestones" label="发展里程碑" />
+          <div class="flex flex-col gap-0">
+            {dept.achievements.map((ach, i) => (
+              <div class="flex gap-4 fade-in">
+                <div class="flex flex-col items-center flex-shrink-0">
+                  <div class="w-3 h-3" style="background: var(--color-atomic-orange); box-shadow: 0 0 8px rgba(232,101,26,0.5);"></div>
+                  {i < dept.achievements.length - 1 && (
+                    <div class="w-0.5 flex-1 my-1" style="background: linear-gradient(180deg, var(--color-atomic-orange-dim), var(--color-border-metal));"></div>
+                  )}
+                </div>
+                <div class="pb-5">
+                  <p class="text-[12px] leading-[1.7]" style="color: var(--color-text-secondary);">
+                    {ach}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

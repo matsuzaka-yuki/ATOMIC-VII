@@ -11,6 +11,14 @@ export const navigation: NavItem[] = [
   { label: "安全协议", href: "/security" },
 ];
 
+export const departmentNav: NavItem[] = [
+  { label: "聚变能源部", href: "/dept/fusion" },
+  { label: "动力装甲部", href: "/dept/armor" },
+  { label: "量子通讯部", href: "/dept/quantum" },
+  { label: "辐射医学部", href: "/dept/medical" },
+  { label: "废土生态部", href: "/dept/ecology" },
+];
+
 export const siteConfig = {
   title: "ATOMIC-7 // 核子前沿研究所",
   classification: "TOP SECRET // RESTRICTED ACCESS",

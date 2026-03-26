@@ -26,9 +26,15 @@
         研究部门
       </h4>
       <ul class="list-none">
-        {["聚变能源部", "动力装甲部", "量子通讯部", "辐射医学部", "废土生态部"].map((item) => (
+        {[
+          { label: "聚变能源部", href: "/dept/fusion" },
+          { label: "动力装甲部", href: "/dept/armor" },
+          { label: "量子通讯部", href: "/dept/quantum" },
+          { label: "辐射医学部", href: "/dept/medical" },
+          { label: "废土生态部", href: "/dept/ecology" },
+        ].map((item) => (
           <li class="mb-2">
-            <a href="#" class="footer-link">{item}</a>
+            <a href={item.href} class="footer-link">{item.label}</a>
           </li>
         ))}
       </ul>
