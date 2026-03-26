@@ -1,184 +1,197 @@
 ---
 import Layout from "../components/layouts/Layout.astro";
-import Breadcrumb from "../components/molecules/Breadcrumb.astro";
-import SectionHeader from "../components/molecules/SectionHeader.astro";
-import MetalPanel from "../components/molecules/MetalPanel.astro";
-import ArtDecoDivider from "../components/atoms/ArtDecoDivider.astro";
-import VacuumTube from "../components/atoms/VacuumTube.astro";
 import { channels, transmissions, gauges } from "../data/comms";
 
-const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
-
-const statusMap: Record<string, string> = {
-  online: "\u5728\u7EBF",
-  weak: "\u4FE1\u53F7\u5F31",
-  offline: "\u79BB\u7EBF",
-};
-
-const statusDotMap: Record<string, string> = {
-  online: "green",
-  weak: "orange",
-  offline: "red",
-};
-
-const badgeClassMap: Record<string, string> = {
-  routine: "routine",
-  encrypted: "encrypted",
-  priority: "priority",
-};
+const statusMap: Record<string, string> = { online: "在线", weak: "信号弱", offline: "离线" };
+const statusDotMap: Record<string, string> = { online: "green", weak: "orange", offline: "red" };
 ---
 
-<Layout title="ATOMIC-7 // \u901A\u8BAF\u9891\u9053" currentPath="/comms">
-  <div class="max-w-[1400px] mx-auto px-5 pt-8 pb-16">
-    <Breadcrumb items={breadcrumbItems} current="\u901A\u8BAF\u9891\u9053" />
-  </div>
+<Layout title="ATOMIC-7 // 通讯频道" currentPath="/comms">
+  <div class="cmp-page">
 
-  <section class="max-w-[1400px] mx-auto px-5 pb-10 fade-in">
-    <SectionHeader tag="COMMS CENTER // CLASSIFIED" label="\u901A\u8BAF\u9891\u9053" />
-
-    <div class="channel-grid">
-      {channels.map((ch) => (
-        <div class={`channel-card${ch.status === "offline" ? " offline" : ""}`}>
-          <div class="channel-header">
-            <span class="channel-id">{ch.id}</span>
-            <div class={`channel-status ${ch.status}`}>
-              <span class={`status-dot ${statusDotMap[ch.status]}`}></span>
-              <span>{statusMap[ch.status]}</span>
-            </div>
-          </div>
-          <div class="channel-name">{ch.name}</div>
-          <div class="channel-frequency" style={ch.frequencyOverride ? `color: ${ch.frequencyOverride.color}` : ""}>
-            ▶ {ch.frequencyOverride ? ch.frequencyOverride.prefix : ""} {ch.frequency}
-          </div>
-          <div class="waveform">
-            {Array.from({ length: 12 }).map(() => (
-              <div class="waveform-bar"></div>
-            ))}
-          </div>
-          <div class="signal-strength">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div class={`signal-bar${i < ch.signalBars ? " active" : ""}`}></div>
-            ))}
-          </div>
-          <div class="channel-activity" style={ch.activityOverride ? `color: ${ch.activityOverride.color}` : ""}>
-            {"\u6700\u540E\u6D3B\u52A8: "}{ch.activityOverride ? ch.activityOverride.text : ch.lastActivity}
-          </div>
-        </div>
-      ))}
+    <div class="cmp-breadcrumb fade-in">
+      <a href="/">ATOMIC-7</a>
+      <span class="sep">›</span>
+      <span class="current">通讯频道</span>
     </div>
-  </section>
 
-  <div class="flex justify-center gap-5 py-5 opacity-60 fade-in">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
+    <!-- Channel Rack -->
+    <section class="cmp-section fade-in">
+      <div class="cmp-section-header">
+        <h1 class="cmp-section-title">通讯频道</h1>
+        <div class="cmp-section-tag">COMMS CENTER // CLASSIFIED</div>
+      </div>
 
-  <section class="max-w-[1400px] mx-auto px-5 pb-10 fade-in">
-    <SectionHeader tag="LIVE TRANSMISSION LOG // MONITORED" label="\u5B9E\u65F6\u901A\u8BAF\u8BB0\u5F55" />
-
-    <MetalPanel rivets={["bl", "br"]}>
-      <div class="transmission-log">
-        {transmissions.map((t) => (
-          <div class={`transmission-entry ${t.direction}`}>
-            <div class="transmission-avatar">{t.avatar}</div>
-            <div class="transmission-content">
-              <div class="transmission-meta">
-                {t.direction === "received" && <span class="transmission-sender">{t.sender}</span>}
-                <span class="transmission-time">{t.time}</span>
-                {t.direction === "sent" && <span class="transmission-sender">{t.sender}</span>}
-                <span class={`transmission-badge ${badgeClassMap[t.badge]}`}>{t.badge.toUpperCase()}</span>
+      <div class="cmp-channel-grid">
+        {channels.map((ch) => (
+          <div class={`cmp-channel-card${ch.status === "offline" ? " offline" : ""}`}>
+            <div class="cmp-channel-topbar">
+              <span class="cmp-channel-id">{ch.id}</span>
+              <div class={`cmp-channel-status ${ch.status}`}>
+                <span class={`status-dot ${statusDotMap[ch.status]}`}></span>
+                <span>{statusMap[ch.status]}</span>
               </div>
-              <div class="transmission-message">{t.message}</div>
+            </div>
+            <div class="cmp-channel-body">
+              <div class="cmp-channel-name">{ch.name}</div>
+              <div class="cmp-channel-freq" style={ch.frequencyOverride ? `color: ${ch.frequencyOverride.color}` : ""}>
+                <span class="freq-prefix">▶</span> {ch.frequencyOverride ? ch.frequencyOverride.prefix : ""} {ch.frequency}
+              </div>
+              <div class="cmp-waveform">
+                {Array.from({ length: 12 }).map(() => <div class="cmp-waveform-bar"></div>)}
+              </div>
+              <div class="cmp-channel-footer">
+                <div class="cmp-signal-strength">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div class={`cmp-signal-bar${i < ch.signalBars ? " active" : ""}`}></div>
+                  ))}
+                </div>
+                <div class="cmp-channel-activity" style={ch.activityOverride ? `color: ${ch.activityOverride.color}` : ""}>
+                  {ch.activityOverride ? ch.activityOverride.text : ch.lastActivity}
+                </div>
+              </div>
             </div>
           </div>
         ))}
-        <div class="typing-indicator">
-          <div class="typing-dots">
-            <span></span><span></span><span></span>
+      </div>
+    </section>
+
+    <div class="cmp-divider fade-in">
+      <div class="line"></div>
+      <div class="diamond"></div>
+      <div class="dot"></div>
+      <div class="diamond"></div>
+      <div class="dot"></div>
+      <div class="diamond"></div>
+      <div class="line"></div>
+    </div>
+
+    <!-- CRT Transmission Terminal -->
+    <section class="cmp-section fade-in">
+      <div class="cmp-section-header">
+        <h2 class="cmp-section-title">实时通讯记录</h2>
+        <div class="cmp-section-tag">LIVE TRANSMISSION LOG // MONITORED</div>
+      </div>
+
+      <div class="cmp-terminal-frame">
+        <div class="cmp-terminal-header">
+          <span class="cmp-terminal-title">◉ SECURE TERMINAL</span>
+          <div class="cmp-terminal-indicators">
+            <div class="cmp-terminal-ind rec"></div>
+            <div class="cmp-terminal-ind trx"></div>
+            <div class="cmp-terminal-ind err"></div>
           </div>
-          <span>SCIENCE-LAB-03 \u6B63\u5728\u8F93\u5165...</span>
+        </div>
+        <div class="cmp-transmission-log">
+          {transmissions.map((t) => (
+            <div class={`cmp-tx-entry ${t.direction}`}>
+              <div class="cmp-tx-avatar">{t.avatar}</div>
+              <div class="cmp-tx-content">
+                <div class="cmp-tx-meta">
+                  {t.direction === "received" && <span class="cmp-tx-sender">{t.sender}</span>}
+                  <span class="cmp-tx-time">{t.time}</span>
+                  {t.direction === "sent" && <span class="cmp-tx-sender">{t.sender}</span>}
+                  <span class={`cmp-tx-badge ${t.badge}`}>{t.badge.toUpperCase()}</span>
+                </div>
+                <div class="cmp-tx-message">{t.message}</div>
+              </div>
+            </div>
+          ))}
+          <div class="cmp-typing">
+            <div class="cmp-typing-dots"><span></span><span></span><span></span></div>
+            <span>SCIENCE-LAB-03 正在输入...</span>
+          </div>
         </div>
       </div>
-    </MetalPanel>
-  </section>
+    </section>
 
-  <div class="flex justify-center gap-5 py-5 opacity-60 fade-in">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
+    <div class="cmp-tube-row fade-in">
+      <div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div>
+    </div>
 
-  <section class="max-w-[1400px] mx-auto px-5 pb-10 fade-in">
-    <SectionHeader tag="SIGNAL ANALYSIS // REAL-TIME" label="\u4FE1\u53F7\u5206\u6790\u4EEA\u8868" />
+    <!-- Analog Gauge Dashboard -->
+    <section class="cmp-section fade-in">
+      <div class="cmp-section-header">
+        <h2 class="cmp-section-title">信号分析仪表</h2>
+        <div class="cmp-section-tag">SIGNAL ANALYSIS // REAL-TIME</div>
+      </div>
 
-    <MetalPanel rivets={["bl", "br"]}>
-      <div class="comms-gauge-grid">
+      <div class="cmp-gauge-grid">
         {gauges.map((g) => (
-          <div class="comms-gauge-item">
-            <div class="comms-gauge-ring">
+          <div class="cmp-gauge-item">
+            <div class="cmp-gauge-ring">
               <svg viewBox="0 0 100 100">
-                <circle class="comms-gauge-bg" cx="50" cy="50" r="45"></circle>
-                <circle class={`comms-gauge-fill ${g.speed}`} cx="50" cy="50" r="45" style={`--fill-offset: ${g.fillOffset}`}></circle>
+                <circle class="cmp-gauge-bg" cx="50" cy="50" r="40"></circle>
+                <circle class="cmp-gauge-ticks" cx="50" cy="50" r="40" stroke-dasharray="2 5.7" stroke-dashoffset="0"></circle>
+                <circle class={`cmp-gauge-fill ${g.speed}`} cx="50" cy="50" r="40" style={`--fill-offset: ${Math.round(g.fillOffset * (251/283))}`}></circle>
               </svg>
-              <div class="comms-gauge-value">{g.value}</div>
+              <div class="cmp-gauge-value">{g.value}</div>
             </div>
-            <div class="comms-gauge-label">{g.label}</div>
-            <div class="comms-gauge-sublabel">{g.sublabel}</div>
+            <div class="cmp-gauge-label">{g.label}</div>
+            <div class="cmp-gauge-sublabel">{g.sublabel}</div>
           </div>
         ))}
       </div>
-    </MetalPanel>
-  </section>
+    </section>
 
-  <div class="flex justify-center gap-5 py-5 opacity-60 fade-in">
-    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
-  </div>
+    <div class="cmp-divider fade-in">
+      <div class="line"></div>
+      <div class="diamond"></div>
+      <div class="dot"></div>
+      <div class="diamond"></div>
+      <div class="dot"></div>
+      <div class="diamond"></div>
+      <div class="line"></div>
+    </div>
 
-  <section class="max-w-[1400px] mx-auto px-5 pb-16 fade-in">
-    <SectionHeader tag="EMERGENCY BROADCAST // AUTHORIZED ONLY" label="\u7D27\u6025\u5E7F\u64AD\u7CFB\u7EDF" />
+    <!-- Emergency Broadcast Console -->
+    <section class="cmp-section fade-in">
+      <div class="cmp-section-header">
+        <h2 class="cmp-section-title">紧急广播系统</h2>
+        <div class="cmp-section-tag">EMERGENCY BROADCAST // AUTHORIZED ONLY</div>
+      </div>
 
-    <MetalPanel rivets={["bl", "br"]}>
-      <div class="comms-emergency-section">
-        <div class="warning-stripe"></div>
-        <div class="comms-emergency-title">⚠ \u7D27\u6025\u5E7F\u64AD\u7CFB\u7EDF ⚠</div>
+      <div class="cmp-emergency-frame">
+        <div class="cmp-warning-stripe"></div>
+        <div class="cmp-emergency-title">⚠ 紧急广播系统 ⚠</div>
 
-        <div class="broadcast-list">
-          <div class="broadcast-item">
-            <span class="broadcast-name">🚨 \u5168\u8BBE\u65BD\u7591\u6563\u8B66\u62A5</span>
-            <button class="broadcast-btn">\u53D1\u9001\u5E7F\u64AD</button>
+        <div class="cmp-broadcast-list">
+          <div class="cmp-broadcast-item">
+            <span class="cmp-broadcast-name">🚨 全设施疏散警报</span>
+            <button class="cmp-broadcast-btn">发送广播</button>
           </div>
-          <div class="broadcast-item">
-            <span class="broadcast-name">☢\uFE0F \u8F90\u5C04\u6CC4\u6F0F\u8B66\u544A</span>
-            <button class="broadcast-btn">\u53D1\u9001\u5E7F\u64AD</button>
+          <div class="cmp-broadcast-item">
+            <span class="cmp-broadcast-name">☢️ 辐射泄漏警告</span>
+            <button class="cmp-broadcast-btn">发送广播</button>
           </div>
-          <div class="broadcast-item">
-            <span class="broadcast-name">🔒 \u5B89\u5168\u5C01\u9501\u901A\u77E5</span>
-            <button class="broadcast-btn orange">\u53D1\u9001\u5E7F\u64AD</button>
+          <div class="cmp-broadcast-item">
+            <span class="cmp-broadcast-name">🔒 安全封锁通知</span>
+            <button class="cmp-broadcast-btn orange">发送广播</button>
           </div>
-          <div class="broadcast-item">
-            <span class="broadcast-name">🎯 \u5916\u90E8\u5165\u4FB5\u8B66\u62A5</span>
-            <button class="broadcast-btn">\u53D1\u9001\u5E7F\u64AD</button>
+          <div class="cmp-broadcast-item">
+            <span class="cmp-broadcast-name">🎯 外部入侵警报</span>
+            <button class="cmp-broadcast-btn">发送广播</button>
           </div>
-          <div class="broadcast-item">
-            <span class="broadcast-name">🔧 \u7CFB\u7EDF\u7EF4\u62A4\u516C\u544A</span>
-            <button class="broadcast-btn orange">\u53D1\u9001\u5E7F\u64AD</button>
+          <div class="cmp-broadcast-item">
+            <span class="cmp-broadcast-name">🔧 系统维护公告</span>
+            <button class="cmp-broadcast-btn orange">发送广播</button>
           </div>
         </div>
 
-        <div class="mt-5">
-          <div class="text-[11px] text-[var(--color-text-secondary)] tracking-wider mb-2">
-            \u81EA\u5B9A\u4E49\u5E7F\u64AD\u5185\u5BB9 [\u7EC8\u7AEF\u8F93\u5165]
-          </div>
-          <textarea
-            class="terminal-textarea"
-            placeholder={"> \u5728\u6B64\u8F93\u5165\u81EA\u5B9A\u4E49\u5E7F\u64AD\u5185\u5BB9...\n> \u652F\u6301\u591A\u884C\u6587\u672C\n> \u53D1\u9001\u540E\u5C06\u5E7F\u64AD\u81F3\u6240\u6709\u5728\u7EBF\u9891\u9053"}
-          ></textarea>
+        <div>
+          <div style="font-size: 10px; color: var(--color-text-secondary); letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase;">自定义广播内容 [终端输入]</div>
+          <textarea class="cmp-terminal-textarea" placeholder={"> 在此输入自定义广播内容...\n> 支持多行文本\n> 发送后将广播至所有在线频道"}></textarea>
         </div>
 
-        <div class="broadcast-actions">
-          <button class="btn-secondary">\u6E05\u9664\u5185\u5BB9</button>
-          <button class="broadcast-btn" style="padding: 10px 30px; font-size: 13px;">
-            ▶ \u53D1\u9001\u81EA\u5B9A\u4E49\u5E7F\u64AD
-          </button>
+        <div class="cmp-broadcast-actions">
+          <button class="cmp-btn-secondary">清除内容</button>
+          <button class="cmp-broadcast-btn" style="padding: 8px 24px; font-size: 11px;">▶ 发送自定义广播</button>
         </div>
       </div>
-    </MetalPanel>
-  </section>
+    </section>
+
+    <div class="cmp-tube-row fade-in">
+      <div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div><div class="cmp-tube"></div>
+    </div>
+  </div>
 </Layout>
