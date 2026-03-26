@@ -1,0 +1,20 @@
+---
+interface Props {
+  label: string;
+  value: string;
+}
+
+const { label, value } = Astro.props;
+---
+
+<div class="flex-1">
+  <div class="text-[10px] tracking-[2px] uppercase" style="color: var(--color-text-secondary);">
+    {label}
+  </div>
+  <div
+    class="font-heading text-2xl font-semibold mt-1 leading-none"
+    style="color: var(--color-crt-green); text-shadow: 0 0 8px var(--color-crt-green-glow);"
+  >
+    {value}
+  </div>
+</div>

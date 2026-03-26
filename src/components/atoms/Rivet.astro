@@ -1,0 +1,19 @@
+---
+interface Props {
+  position?: "tl" | "tr" | "bl" | "br";
+}
+
+const { position = "tl" } = Astro.props;
+
+const posClasses: Record<string, string> = {
+  tl: "top-2 left-2",
+  tr: "top-2 right-2",
+  bl: "bottom-2 left-2",
+  br: "bottom-2 right-2",
+};
+---
+
+<div
+  class={`absolute w-2.5 h-2.5 rounded-full ${posClasses[position]}`}
+  style="background: radial-gradient(circle at 35% 35%, var(--color-rivet-highlight), var(--color-rivet) 60%, #4a4540); box-shadow: inset 0 -1px 1px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.1);"
+></div>

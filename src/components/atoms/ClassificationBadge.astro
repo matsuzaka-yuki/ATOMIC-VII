@@ -1,0 +1,47 @@
+---
+type Classification = "top-secret" | "secret" | "confidential" | "unclassified";
+
+interface Props {
+  level: Classification;
+  text?: string;
+}
+
+const { level, text } = Astro.props;
+
+const config: Record<Classification, { label: string; bg: string; color: string; shadow: string }> = {
+  "top-secret": {
+    label: "绝密",
+    bg: "var(--color-warning-red)",
+    color: "#fff",
+    shadow: "0 0 8px rgba(196,30,30,0.4)",
+  },
+  secret: {
+    label: "机密",
+    bg: "var(--color-atomic-orange)",
+    color: "#fff",
+    shadow: "0 0 8px rgba(232,101,26,0.3)",
+  },
+  confidential: {
+    label: "内部",
+    bg: "var(--color-olive-drab-light)",
+    color: "var(--color-crt-green)",
+    shadow: "none",
+  },
+  unclassified: {
+    label: "公开",
+    bg: "var(--color-border-metal)",
+    color: "var(--color-text-secondary)",
+    shadow: "none",
+  },
+};
+
+const c = config[level];
+const displayText = text || c.label;
+---
+
+<span
+  class="inline-block px-2.5 py-0.5 font-heading font-bold text-[9px] tracking-widest uppercase clip-sm whitespace-nowrap"
+  style={`background: ${c.bg}; color: ${c.color}; box-shadow: ${c.shadow};`}
+>
+  {displayText}
+</span>

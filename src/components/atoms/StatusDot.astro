@@ -1,0 +1,21 @@
+---
+interface Props {
+  color?: "green" | "orange" | "red";
+  size?: "sm" | "md";
+}
+
+const { color = "green", size = "md" } = Astro.props;
+
+const sizeClass = size === "sm" ? "w-1.5 h-1.5" : "w-2 h-2";
+
+const colorMap: Record<string, string> = {
+  green: `background: var(--color-crt-green); color: var(--color-crt-green); animation: pulse-glow 2s ease-in-out infinite;`,
+  orange: `background: var(--color-atomic-orange); color: var(--color-atomic-orange); animation: pulse-glow 1.5s ease-in-out infinite;`,
+  red: `background: var(--color-warning-red); color: var(--color-warning-red); animation: pulse-glow 1s ease-in-out infinite;`,
+};
+---
+
+<span
+  class={`${sizeClass} rounded-full inline-block shrink-0`}
+  style={`box-shadow: 0 0 6px currentColor; ${colorMap[color]}`}
+></span>
