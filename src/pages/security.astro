@@ -17,21 +17,16 @@ const classificationLabelMap: Record<string, string> = {
 };
 ---
 
-<Layout title="ATOMIC-7 // \u5B89\u5168\u534F\u8BAE" currentPath="/security">
+<Layout title="ATOMIC-7 // 安全协议" currentPath="/security">
   <div class="breadcrumb-security py-5 px-6 max-w-[1400px] mx-auto text-[12px] text-[var(--color-text-secondary)]">
     <a href="/" class="text-[var(--color-text-secondary)] no-underline hover:text-[var(--color-crt-green)] transition-colors">ATOMIC-7</a>
     <span class="separator mx-2 text-[var(--color-border-metal)]">›</span>
-    <span class="current text-[var(--color-atomic-orange)]">\u5B89\u5168\u534F\u8BAE</span>
+    <span class="current text-[var(--color-atomic-orange)]">安全协议</span>
   </div>
 
   <!-- DEFCON Alert -->
   <section class="alert-section fade-in">
     <div class="alert-panel metal-panel">
-      <div class="rivet rivet-tl"></div>
-      <div class="rivet rivet-tr"></div>
-      <div class="rivet rivet-bl"></div>
-      <div class="rivet rivet-br"></div>
-
       <div class="alert-header">
         <div class="alert-title-group">
           <div class="alert-icon">⚠</div>
@@ -41,7 +36,7 @@ const classificationLabelMap: Record<string, string> = {
           </div>
         </div>
         <div class="alert-timestamp">
-          <div>\u6700\u540E\u66F4\u65B0: 1962.03.15 08:42:17</div>
+          <div>最后更新: 1962.03.15 08:42:17</div>
           <div class="blink">● LIVE MONITORING</div>
         </div>
       </div>
@@ -59,22 +54,22 @@ const classificationLabelMap: Record<string, string> = {
 
       <div class="alert-stats">
         <div class="alert-stat orange">
-          <div class="alert-stat-label">\u5F53\u524D\u5A01\u80C1\u8BC4\u4F30</div>
-          <div class="alert-stat-value orange">\u4E2D\u7B49</div>
+          <div class="alert-stat-label">当前威胁评估</div>
+          <div class="alert-stat-value orange">中等</div>
           <div class="alert-stat-sub">MODERATE THREAT</div>
         </div>
         <div class="alert-stat green">
-          <div class="alert-stat-label">\u5DE1\u903B\u961F\u72B6\u6001</div>
+          <div class="alert-stat-label">巡逻队状态</div>
           <div class="alert-stat-value green">12/12</div>
           <div class="alert-stat-sub">ALL UNITS ACTIVE</div>
         </div>
         <div class="alert-stat orange">
-          <div class="alert-stat-label">\u5C01\u9501\u533A\u57DF\u6570\u91CF</div>
+          <div class="alert-stat-label">封锁区域数量</div>
           <div class="alert-stat-value orange">3</div>
           <div class="alert-stat-sub">SECTORS LOCKED</div>
         </div>
         <div class="alert-stat red">
-          <div class="alert-stat-label">24\u5C0F\u65F6\u4E8B\u4EF6\u6570</div>
+          <div class="alert-stat-label">24小时事件数</div>
           <div class="alert-stat-value red">7</div>
           <div class="alert-stat-sub">INCIDENTS RECORDED</div>
         </div>
@@ -95,17 +90,13 @@ const classificationLabelMap: Record<string, string> = {
         <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
       </div>
       <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
-        \u5B89\u5168\u534F\u8BAE\u624B\u518C
+        安全协议手册
       </h2>
     </div>
 
     <div class="protocols-grid">
       {protocols.map((p) => (
         <div class="protocol-card metal-panel">
-          <div class="rivet rivet-tl"></div>
-          <div class="rivet rivet-tr"></div>
-          <div class="rivet rivet-bl"></div>
-          <div class="rivet rivet-br"></div>
           <div class="protocol-header">
             <span class="protocol-id">{p.id}</span>
             <span class={`protocol-classification-badge ${p.classification}`}>{classificationLabelMap[p.classification]}</span>
@@ -118,7 +109,7 @@ const classificationLabelMap: Record<string, string> = {
               <span class="dot"></span>
               {p.statusName}
             </div>
-            <span class="protocol-date">\u66F4\u65B0: {p.date}</span>
+            <span class="protocol-date">更新: {p.date}</span>
           </div>
         </div>
       ))}
@@ -138,7 +129,7 @@ const classificationLabelMap: Record<string, string> = {
         <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
       </div>
       <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
-        \u6743\u9650\u7B49\u7EA7\u7CFB\u7EDF
+        权限等级系统
       </h2>
     </div>
 
@@ -176,7 +167,7 @@ const classificationLabelMap: Record<string, string> = {
         <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
       </div>
       <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
-        \u5B89\u5168\u4E8B\u4EF6\u65E5\u5FD7
+        安全事件日志
       </h2>
     </div>
 
@@ -184,10 +175,6 @@ const classificationLabelMap: Record<string, string> = {
       <div class="incident-timeline">
         {incidents.map((inc) => (
           <div class={`incident-entry ${inc.status} metal-panel`}>
-            <div class="rivet rivet-tl"></div>
-            <div class="rivet rivet-tr"></div>
-            <div class="rivet rivet-bl"></div>
-            <div class="rivet rivet-br"></div>
             <div class="incident-header">
               <div class="incident-meta">
                 <span class="incident-date">{inc.date}</span>
@@ -215,17 +202,12 @@ const classificationLabelMap: Record<string, string> = {
         <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
       </div>
       <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
-        \u4EBA\u5458\u8EAB\u4EFD\u626B\u63CF
+        人员身份扫描
       </h2>
     </div>
 
     <div class="scanner-container">
       <div class="scanner-panel metal-panel">
-        <div class="rivet rivet-tl"></div>
-        <div class="rivet rivet-tr"></div>
-        <div class="rivet rivet-bl"></div>
-        <div class="rivet rivet-br"></div>
-
         <div class="scanner-header">
           <span class="scanner-title">◉ PERSONNEL ID SCANNER</span>
           <span class="scanner-status">
@@ -238,8 +220,8 @@ const classificationLabelMap: Record<string, string> = {
           <div class="scanner-screen">
             <div class="scanner-input-group">
               <div class="scanner-prompt">C:\ATOMIC7\SECURITY> ENTER PERSONNEL ID CODE:</div>
-              <input type="text" class="scanner-input" id="scanner-input" placeholder="\u8F93\u5165\u4EBA\u5458\u7F16\u53F7 (\u4F8B: T-0847)" maxlength="10" />
-              <button class="scanner-btn" id="scan-btn">\u6267\u884C\u626B\u63CF</button>
+              <input type="text" class="scanner-input" id="scanner-input" placeholder="输入人员编号 (例: T-0847)" maxlength="10" />
+              <button class="scanner-btn" id="scan-btn">执行扫描</button>
             </div>
 
             <div class="scanner-result" id="scanner-result">
@@ -250,33 +232,33 @@ const classificationLabelMap: Record<string, string> = {
 
               <div class="personnel-record" id="record-template">
                 <div class="record-header">
-                  <div class="record-name" id="rec-name">\u2014</div>
+                  <div class="record-name" id="rec-name">—</div>
                   <div class="record-clearance l3" id="rec-clearance">L3</div>
                 </div>
                 <div class="record-fields">
                   <div class="record-field">
-                    <span class="record-field-label">\u4EBA\u5458\u7F16\u53F7</span>
-                    <span class="record-field-value" id="rec-id">\u2014</span>
+                    <span class="record-field-label">人员编号</span>
+                    <span class="record-field-value" id="rec-id">—</span>
                   </div>
                   <div class="record-field">
-                    <span class="record-field-label">\u6743\u9650\u7B49\u7EA7</span>
-                    <span class="record-field-value" id="rec-level">\u2014</span>
+                    <span class="record-field-label">权限等级</span>
+                    <span class="record-field-value" id="rec-level">—</span>
                   </div>
                   <div class="record-field">
-                    <span class="record-field-label">\u6240\u5C5E\u90E8\u95E8</span>
-                    <span class="record-field-value" id="rec-dept">\u2014</span>
+                    <span class="record-field-label">所属部门</span>
+                    <span class="record-field-value" id="rec-dept">—</span>
                   </div>
                   <div class="record-field">
-                    <span class="record-field-label">\u6700\u540E\u8BA4\u8BC1</span>
-                    <span class="record-field-value" id="rec-auth">\u2014</span>
+                    <span class="record-field-label">最后认证</span>
+                    <span class="record-field-value" id="rec-auth">—</span>
                   </div>
                   <div class="record-field">
-                    <span class="record-field-label">\u751F\u7269\u7279\u5F81</span>
-                    <span class="record-field-value verified" id="rec-bio">\u2014</span>
+                    <span class="record-field-label">生物特征</span>
+                    <span class="record-field-value verified" id="rec-bio">—</span>
                   </div>
                   <div class="record-field">
-                    <span class="record-field-label">\u5B89\u5168\u72B6\u6001</span>
-                    <span class="record-field-value" id="rec-status">\u2014</span>
+                    <span class="record-field-label">安全状态</span>
+                    <span class="record-field-value" id="rec-status">—</span>
                   </div>
                 </div>
               </div>
@@ -300,23 +282,18 @@ const classificationLabelMap: Record<string, string> = {
         <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
       </div>
       <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
-        \u8FDD\u7981\u7269\u54C1\u6E05\u5355
+        违禁物品清单
       </h2>
     </div>
 
     <div class="prohibited-container">
       <div class="prohibited-panel metal-panel">
-        <div class="rivet rivet-tl"></div>
-        <div class="rivet rivet-tr"></div>
-        <div class="rivet rivet-bl"></div>
-        <div class="rivet rivet-br"></div>
-
         <table class="prohibited-table">
           <thead>
             <tr>
-              <th>\u7C7B\u522B</th>
-              <th>\u7269\u54C1\u63CF\u8FF0</th>
-              <th>\u9650\u5236\u7EA7\u522B</th>
+              <th>类别</th>
+              <th>物品描述</th>
+              <th>限制级别</th>
             </tr>
           </thead>
           <tbody>

@@ -1,6 +1,4 @@
 ---
-import Rivet from "../atoms/Rivet.astro";
-
 const filters = [
   { value: "all", label: "全部" },
   { value: "top-secret", label: "绝密" },
@@ -11,10 +9,6 @@ const filters = [
 ---
 
 <div class="filter-bar metal-panel-bg">
-  <Rivet position="tl" />
-  <Rivet position="tr" />
-  <Rivet position="bl" />
-  <Rivet position="br" />
   <span class="filter-label">◉ 筛选：</span>
   {filters.map((f, i) => (
     <button
@@ -34,4 +28,3 @@ const filters = [
     显示 <span id="visibleCount">8</span> / 8 份档案
   </div>
 </div>
-

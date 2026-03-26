@@ -3,7 +3,6 @@ import Layout from "../components/layouts/Layout.astro";
 import Breadcrumb from "../components/molecules/Breadcrumb.astro";
 import ArtDecoDivider from "../components/atoms/ArtDecoDivider.astro";
 import MetalPanel from "../components/molecules/MetalPanel.astro";
-import Rivet from "../components/atoms/Rivet.astro";
 import VacuumTube from "../components/atoms/VacuumTube.astro";
 import { utilities } from "../data/map";
 
@@ -28,10 +27,6 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
     </div>
 
     <div class="floor-selector metal-panel-bg">
-      <Rivet position="tl" />
-      <Rivet position="tr" />
-      <Rivet position="bl" />
-      <Rivet position="br" />
       <span class="floor-selector-label">◉ 层级：</span>
       <button class="floor-btn active" data-floor="all">全部<span class="floor-sub">ALL LEVELS</span></button>
       <button class="floor-btn" data-floor="b1">B1<span class="floor-sub">-12m</span></button>
@@ -47,8 +42,6 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
       <div class="utilities-panel">
         {utilities.map((u) => (
           <div class="utility-card metal-panel-bg">
-            <Rivet position="tl" />
-            <Rivet position="tr" />
             <div class="utility-header">
               <span class="utility-name">{u.icon} {u.name}</span>
               <span class={`utility-status util-${u.status}`}>{u.statusText}</span>
@@ -66,11 +59,6 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
       </div>
 
       <div class="bunker-map">
-        <Rivet position="tl" />
-        <Rivet position="tr" />
-        <Rivet position="bl" />
-        <Rivet position="br" />
-
         <div class="map-title-bar">
           <h3>◉ ATOMIC-7 设施剖面</h3>
           <span class="map-coords">比例 1:500 | 垂直深度 127m</span>
@@ -160,7 +148,6 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
 
       <div class="info-panel">
         <div class="zone-detail-card metal-panel-bg" id="zoneDetail">
-          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
           <div class="zone-detail-header">
             <div class="zone-detail-floor" id="detailFloor">B4 // -68m</div>
             <div class="zone-detail-name" id="detailName">主控中心</div>
@@ -223,28 +210,24 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
 
       <div class="emergency-grid fade-in">
         <MetalPanel class="emergency-card">
-          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
           <div class="emergency-icon">🚪</div>
           <div class="emergency-name">紧急疏散通道</div>
           <span class="emergency-status em-ready">就绪</span>
           <p class="emergency-detail">4条主疏散通道全部畅通<br />预计全设施疏散时间: 12分钟</p>
         </MetalPanel>
         <MetalPanel class="emergency-card">
-          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
           <div class="emergency-icon">🔥</div>
           <div class="emergency-name">灭火系统</div>
           <span class="emergency-status em-ready">就绪</span>
           <p class="emergency-detail">哈龙1301气体灭火覆盖全区域<br />B3生态实验室已切换为水基系统</p>
         </MetalPanel>
         <MetalPanel class="emergency-card">
-          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
           <div class="emergency-icon">🛡</div>
           <div class="emergency-name">防爆闸门</div>
           <span class="emergency-status em-ready">就绪</span>
           <p class="emergency-detail">12道主防爆闸门响应时间 &lt;3秒<br />B5以下区域闸门已加固</p>
         </MetalPanel>
         <MetalPanel class="emergency-card">
-          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
           <div class="emergency-icon">☢</div>
           <div class="emergency-name">核生化防护</div>
           <span class="emergency-status em-standby">待命</span>
@@ -258,7 +241,6 @@ const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
 
   <section class="clearance-section">
     <div class="clearance-container metal-panel-bg fade-in">
-      <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
       <div class="clearance-title">安全许可等级图例</div>
       <div class="clearance-grid">
         <div class="clearance-item"><span class="clearance-badge cls-l1">L1</span><span class="clearance-desc">公开 - 基础设施区域</span></div>

@@ -1,5 +1,4 @@
 ---
-import Rivet from "../atoms/Rivet.astro";
 import type { ExperimentLog } from "../../data/archives";
 
 interface Props extends ExperimentLog {}
@@ -16,8 +15,6 @@ const { date, year, experimentId, status, statusName, title, description, data }
     <div class="log-connector"></div>
   </div>
   <div class="log-card metal-panel-bg">
-    <Rivet position="tl" />
-    <Rivet position="tr" />
     <div class="log-header">
       <span class="log-experiment-id">{experimentId}</span>
       <span class={`log-status log-status-${status}`}>{statusName}</span>
@@ -34,4 +31,3 @@ const { date, year, experimentId, status, statusName, title, description, data }
     </div>
   </div>
 </div>
-
