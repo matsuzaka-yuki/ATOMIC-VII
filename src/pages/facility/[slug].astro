@@ -1,0 +1,210 @@
+---
+import Layout from "../../components/layouts/Layout.astro";
+import Breadcrumb from "../../components/molecules/Breadcrumb.astro";
+import SectionHeader from "../../components/molecules/SectionHeader.astro";
+import ArtDecoDivider from "../../components/atoms/ArtDecoDivider.astro";
+import MetalPanel from "../../components/molecules/MetalPanel.astro";
+import { facilities, alertConfig } from "../../data/facilities";
+
+export function getStaticPaths() {
+  return Object.values(facilities).map((fac) => ({
+    params: { slug: fac.slug },
+    props: { fac },
+  }));
+}
+
+const { fac } = Astro.props;
+const breadcrumbItems = [
+  { label: "ATOMIC-7", href: "/" },
+  { label: "设施导航", href: "/map" },
+];
+
+const eqStatusMap: Record<string, string> = {
+  online: "util-online",
+  warning: "util-warning",
+  offline: "util-offline",
+  standby: "util-online",
+};
+---
+
+<Layout title={`ATOMIC-7 // ${fac.name}`} currentPath={`/facility/${fac.slug}`}>
+  <Breadcrumb items={breadcrumbItems} current={fac.name} />
+
+  <section class="py-16 px-6 relative">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="flex flex-col lg:flex-row gap-8 mb-16 fade-in">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-4xl">{fac.icon}</span>
+            <div>
+              <div class="font-heading text-[11px] tracking-[3px] uppercase" style="color: var(--color-atomic-orange);">
+                {fac.code} // {fac.floor} {fac.depth}
+              </div>
+              <h1 class="font-heading text-4xl md:text-5xl font-bold uppercase tracking-[4px]" style="color: var(--color-text-primary);">
+                {fac.name}
+              </h1>
+            </div>
+          </div>
+          <p class="font-typewriter text-sm mb-6" style="color: var(--color-atomic-orange); letter-spacing: 2px;">
+            "{fac.tagline}"
+          </p>
+          <p class="text-[13px] leading-[1.8] mb-6" style="color: var(--color-text-secondary);">
+            {fac.description}
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <span class="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] tracking-[2px] uppercase" style="background: rgba(232,101,26,0.1); border: 1px solid var(--color-atomic-orange-dim); color: var(--color-atomic-orange);">
+              面积 {fac.area}
+            </span>
+            <span class={`inline-flex items-center gap-2 px-3 py-1.5 text-[10px] tracking-[2px] uppercase clearance-badge cls-l${fac.clearanceNum}`}>
+              {fac.clearanceLevel}
+            </span>
+          </div>
+        </div>
+        <div class="lg:w-[400px] flex-shrink-0">
+          <MetalPanel class="p-6">
+            <h3 class="font-heading text-sm font-semibold uppercase tracking-[2px] mb-5 pb-2" style="color: var(--color-text-primary); border-bottom: 1px solid var(--color-border-metal);">
+              环境监测
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              {fac.envStats.map((stat) => (
+                <div class="text-center p-3" style={`background: rgba(26,24,20,0.6); border: 1px solid ${stat.warning ? "var(--color-warning-red-dim)" : "var(--color-border-metal)"};`}>
+                  <div class={`font-heading text-lg font-bold ${stat.warning ? "text-glow-red" : "text-glow-green"}`} style={`color: ${stat.warning ? "var(--color-warning-red)" : "var(--color-crt-green)"};`}>
+                    {stat.value}
+                  </div>
+                  <div class="text-[10px] tracking-[1px] uppercase mt-1" style="color: var(--color-text-secondary);">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MetalPanel>
+        </div>
+      </div>
+
+      <ArtDecoDivider />
+
+      <SectionHeader tag="Zones & Layout" label="功能分区" />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto mb-8">
+        {fac.zones.map((zone) => (
+          <div class={`metal-panel-bg p-6 fade-in ${zone.alert ? "" : ""}`}>
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center" style="background: var(--color-bg-panel-light); border: 1px solid var(--color-border-metal);">
+                <span class="text-2xl">{zone.icon}</span>
+              </div>
+              <div class="flex-1">
+                <h4 class="font-heading text-lg font-semibold uppercase tracking-[1px]" style="color: var(--color-text-primary);">
+                  {zone.name}
+                </h4>
+                <p class="text-[12px] leading-[1.7]" style="color: var(--color-text-secondary);">
+                  {zone.desc}
+                </p>
+              </div>
+            </div>
+            <div class="grid grid-cols-4 gap-2 pt-4" style="border-top: 1px solid var(--color-border-metal);">
+              <div class="text-center p-2" style="background: rgba(26,24,20,0.6);">
+                <div class="font-heading text-sm font-bold text-glow-green" style="color: var(--color-crt-green);">
+                  {zone.personnel}
+                </div>
+                <div class="text-[9px] tracking-[1px] uppercase" style="color: var(--color-text-secondary);">人员</div>
+              </div>
+              <div class="text-center p-2" style="background: rgba(26,24,20,0.6);">
+                <div class="font-heading text-sm font-bold" style="color: var(--color-text-primary);">
+                  {zone.capacity}
+                </div>
+                <div class="text-[9px] tracking-[1px] uppercase" style="color: var(--color-text-secondary);">容量</div>
+              </div>
+              <div class="text-center p-2" style={`background: rgba(26,24,20,0.6);`}>
+                <div class={`font-heading text-sm font-bold ${parseFloat(zone.radiation) > 2 ? "text-glow-red" : ""}`} style={`color: ${parseFloat(zone.radiation) > 2 ? "var(--color-warning-red)" : "var(--color-crt-green)"};`}>
+                  {zone.radiation}
+                </div>
+                <div class="text-[9px] tracking-[1px] uppercase" style="color: var(--color-text-secondary);">mSv/h</div>
+              </div>
+              <div class="text-center p-2" style="background: rgba(26,24,20,0.6);">
+                <div class="font-heading text-sm font-bold" style="color: var(--color-text-primary);">
+                  {zone.temp}
+                </div>
+                <div class="text-[9px] tracking-[1px] uppercase" style="color: var(--color-text-secondary);">温度</div>
+              </div>
+            </div>
+            <div class="mt-3 flex justify-between items-center">
+              <span class={`clearance-badge text-[9px] cls-l${zone.clearance.includes("4") ? "4" : zone.clearance.includes("3") ? "3" : zone.clearance.includes("2") ? "2" : "1"}`}>
+                {zone.clearance}
+              </span>
+              {zone.alert && (
+                <span class="text-[10px] font-bold tracking-[1px] uppercase px-2 py-0.5" style="background: var(--color-warning-red-dim); color: var(--color-warning-red); animation: blink-slow 2s ease-in-out infinite;">
+                  \u26A0 警报
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <ArtDecoDivider />
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <SectionHeader tag="Equipment & Systems" label="设备与系统" />
+          <div class="flex flex-col gap-4">
+            {fac.equipment.map((eq) => (
+              <div class="metal-panel-bg p-5 fade-in">
+                <div class="flex justify-between items-start mb-2 gap-3">
+                  <h4 class="font-heading text-sm font-semibold uppercase tracking-[1px]" style="color: var(--color-text-primary);">
+                    {eq.name}
+                  </h4>
+                  <span class={`utility-status text-[10px] font-bold tracking-[1px] uppercase px-2 py-0.5 ${eqStatusMap[eq.status] ?? "util-online"}`}>
+                    {eq.statusText}
+                  </span>
+                </div>
+                <div class="text-[11px]" style="color: var(--color-text-secondary);">
+                  {eq.detail}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <SectionHeader tag="Safety Protocols" label="安全守则" />
+          <div class="metal-panel-bg p-6 mb-8">
+            <div class="flex flex-col gap-3">
+              {fac.rules.map((rule, i) => (
+                <div class="flex items-start gap-3">
+                  <span class="font-heading text-sm font-bold flex-shrink-0 mt-0.5" style="color: var(--color-warning-red);">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <p class="text-[12px] leading-[1.7]" style="color: var(--color-text-secondary);">
+                    {rule}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <SectionHeader tag="Alerts & Notices" label="警报与通知" />
+          <div class="flex flex-col gap-3">
+            {fac.alerts.map((alert) => {
+              const config = alertConfig[alert.level];
+              return (
+                <div class="metal-panel-bg p-4 fade-in" style={`border-left: 3px solid ${config.color};`}>
+                  <div class="flex items-start gap-3">
+                    <span class="text-lg flex-shrink-0" style="color: {config.color};">{config.icon}</span>
+                    <div>
+                      <span class="text-[10px] font-bold tracking-[2px] uppercase" style={`color: ${config.color};`}>
+                        [{config.label}]
+                      </span>
+                      <p class="text-[12px] leading-[1.7] mt-1" style="color: var(--color-text-secondary);">
+                        {alert.text}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -48,9 +48,15 @@
         设施导航
       </h4>
       <ul class="list-none">
-        {["主控中心", "反应堆大厅", "武器实验室", "居住区", "地表出口"].map((item) => (
+        {[
+          { label: "主控中心", href: "/facility/command" },
+          { label: "反应堆大厅", href: "/facility/reactor" },
+          { label: "武器实验室", href: "/facility/weapon" },
+          { label: "居住区", href: "/facility/living" },
+          { label: "地表出口", href: "/facility/surface" },
+        ].map((item) => (
           <li class="mb-2">
-            <a href="#" class="footer-link">{item}</a>
+            <a href={item.href} class="footer-link">{item.label}</a>
           </li>
         ))}
       </ul>
