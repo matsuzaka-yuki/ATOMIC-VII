@@ -1,0 +1,49 @@
+---
+import Header from "../organisms/Header.astro";
+import Footer from "../organisms/Footer.astro";
+import "../../styles/global.css";
+
+interface Props {
+  title?: string;
+  currentPath?: string;
+}
+
+const { title = "ATOMIC-7 // 核子前沿研究所", currentPath = "/" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@400;500;600;700&family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="noise-overlay">
+    <Header currentPath={currentPath} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
