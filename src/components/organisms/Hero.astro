@@ -1,0 +1,65 @@
+---
+import VacuumTube from "../atoms/VacuumTube.astro";
+---
+
+<section class="relative py-16 px-6 overflow-hidden min-h-[80vh] flex items-center">
+  <div
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse at 20% 50%, rgba(232,101,26,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(51,255,102,0.05) 0%, transparent 50%);"
+  ></div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-[1400px] mx-auto w-full relative z-[1]">
+    <div class="py-5 fade-in">
+      <div
+        class="inline-flex items-center gap-2 mb-6 px-4 py-1.5 text-[11px] tracking-[3px] uppercase"
+        style="background: var(--color-bg-panel); border: 1px solid var(--color-olive-drab); color: var(--color-crt-green);"
+      >
+        <span style="color: var(--color-atomic-orange);">▸</span>
+        PROJECT PROMETHEUS // PHASE VII
+      </div>
+
+      <h1 class="font-heading text-[40px] md:text-6xl lg:text-[64px] font-bold leading-[0.95] uppercase mb-6" style="color: var(--color-text-primary);">
+        <span>驾驭原子</span>
+        <span class="block" style="color: var(--color-atomic-orange); text-shadow: 0 0 30px rgba(232,101,26,0.4);">重塑未来</span>
+      </h1>
+
+      <p
+        class="text-sm leading-[1.8] mb-10 max-w-[480px] pl-4"
+        style="color: var(--color-text-secondary); border-left: 2px solid var(--color-atomic-orange-dim);"
+      >
+        在核子时代的黎明，我们站在文明与毁灭的十字路口。ATOMIC-7研究所致力于将原子能的无限潜能转化为人类进步的基石——从聚变反应堆到同位素动力装甲，我们正在书写新的科技编年史。
+      </p>
+
+      <div class="flex gap-4 flex-wrap">
+        <button
+          class="clip-btn font-heading text-sm font-semibold tracking-[3px] uppercase px-8 py-3.5 text-white transition-all duration-150 cursor-pointer"
+          style="background: linear-gradient(180deg, var(--color-atomic-orange) 0%, var(--color-atomic-orange-dim) 100%); border: 2px solid var(--color-atomic-orange); box-shadow: 0 4px 0 var(--color-atomic-orange-dim), 0 6px 0 rgba(0,0,0,0.3);"
+          onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 0 var(--color-atomic-orange-dim), 0 8px 0 rgba(0,0,0,0.3), 0 0 20px rgba(232,101,26,0.3)'"
+          onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 0 var(--color-atomic-orange-dim), 0 6px 0 rgba(0,0,0,0.3)'"
+        >
+          进入主控台
+        </button>
+        <button
+          class="clip-btn font-heading text-sm font-medium tracking-[3px] uppercase px-8 py-3.5 transition-all duration-200 cursor-pointer"
+          style="background: transparent; border: 2px solid var(--color-border-metal); color: var(--color-text-secondary);"
+          onmouseover="this.style.borderColor='var(--color-crt-green-dim)'; this.style.color='var(--color-crt-green)'; this.style.textShadow='0 0 8px var(--color-crt-green-glow)'"
+          onmouseout="this.style.borderColor='var(--color-border-metal)'; this.style.color='var(--color-text-secondary)'; this.style.textShadow='none'"
+        >
+          查阅机密档案
+        </button>
+      </div>
+
+      <div class="flex justify-center gap-6 mt-5">
+        <VacuumTube delay={0} />
+        <VacuumTube color="green" delay={0.5} />
+        <VacuumTube delay={1} />
+        <VacuumTube color="green" delay={1.5} />
+        <VacuumTube delay={2} />
+      </div>
+    </div>
+
+    <div class="fade-in">
+      <slot name="right-panel" />
+    </div>
+  </div>
+</section>

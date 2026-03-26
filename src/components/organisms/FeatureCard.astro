@@ -1,0 +1,36 @@
+---
+import MetalPanel from "../molecules/MetalPanel.astro";
+import FeatureMetrics from "../molecules/FeatureMetrics.astro";
+
+interface Props {
+  number: string;
+  icon: string;
+  title: string;
+  description: string;
+  metrics: Array<{ label: string; value: string }>;
+}
+
+const { number, icon, title, description, metrics } = Astro.props;
+---
+
+<MetalPanel class="py-8 px-6 feature-card-base">
+  <span
+    class="absolute top-3 right-4 font-heading text-5xl font-bold leading-none"
+    style="color: rgba(255,255,255,0.03);"
+  >
+    {number}
+  </span>
+  <div class="feature-icon text-4xl mb-5 transition-all duration-300" style="color: var(--color-matte-silver-dark);">
+    {icon}
+  </div>
+  <h3
+    class="font-heading text-xl font-semibold uppercase tracking-[2px] mb-3"
+    style="color: var(--color-text-primary);"
+  >
+    {title}
+  </h3>
+  <p class="text-[13px] leading-[1.7]" style="color: var(--color-text-secondary);">
+    {description}
+  </p>
+  <FeatureMetrics metrics={metrics} />
+</MetalPanel>

@@ -1,0 +1,199 @@
+---
+---
+
+<div
+  class="rounded-lg overflow-hidden max-w-[1000px] mx-auto fade-in"
+  style="background: linear-gradient(145deg, #0a0d08 0%, #0d100a 100%); border: 3px solid var(--color-border-metal); box-shadow: inset 0 0 80px rgba(51,255,102,0.03), 6px 6px 0 rgba(0,0,0,0.5);"
+>
+  <div
+    class="px-4 py-3 flex items-center justify-between"
+    style="background: var(--color-bg-panel); border-bottom: 2px solid var(--color-border-metal);"
+  >
+    <span class="text-xs tracking-[2px]" style="color: var(--color-crt-green); text-shadow: 0 0 8px var(--color-crt-green-glow);">
+      ◉ ATOMIC-7 MAINFRAME TERMINAL v3.7.2
+    </span>
+    <div class="flex gap-2">
+      <span class="w-2.5 h-2.5 rounded-full" style="background: var(--color-warning-red);"></span>
+      <span class="w-2.5 h-2.5 rounded-full" style="background: var(--color-atomic-orange);"></span>
+      <span class="w-2.5 h-2.5 rounded-full" style="background: var(--color-crt-green-dim);"></span>
+    </div>
+  </div>
+
+  <div
+    id="terminal-body"
+    class="terminal-screen p-6 h-[300px] text-[13px] leading-[1.8]"
+    style="color: var(--color-crt-green); text-shadow: 0 0 4px var(--color-crt-green-glow);"
+  >
+    <div class="terminal-line" id="terminal-start">
+      <span class="terminal-prompt">C:\ATOMIC7&gt;</span>
+      <span id="terminal-cursor" class="terminal-cursor"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const terminalLines = [
+    {
+      cmd: "INITIATE_SYSTEM_DIAGNOSTIC.EXE",
+      output: "[INFO] 正在初始化系统诊断程序...\n[INFO] 扫描核心处理器...通过\n[INFO] 验证核裂变模块...通过\n[INFO] 检测冷却循环系统...通过\n[警告] 3号扇区辐射屏蔽层检测到微小衰减，建议48小时内维护",
+      outputClass: "",
+    },
+    {
+      cmd: "QUERY_REACTOR_STATUS",
+      output: "[DATA] 反应堆型号: ATOM-MARK IV TOKAMAK\n[DATA] 当前功率输出: 1.187 GW / 1.200 GW (额定)\n[DATA] 等离子体温度: 150,000,000 K\n[DATA] 磁约束场强度: 5.3 Tesla\n[DATA] 预计燃料剩余: 847 运行小时",
+      outputClass: "",
+    },
+    {
+      cmd: "DISPLAY_SECURITY_BREACH_LOG",
+      output: "[ACCESS DENIED] 权限不足，需要O5级安全许可",
+      outputClass: "",
+    },
+    {
+      cmd: "CHECK_VAULT_INTEGRITY",
+      output: "[INFO] 金库完整性验证通过，所有封印完好",
+      outputClass: "",
+    },
+    {
+      cmd: "RUN_RADATION_SIMULATION",
+      output: "[SIM] 辐射扩散模拟完成，影响半径: 12.4 km",
+      outputClass: "",
+    },
+    {
+      cmd: "ACCESS_PERSONNEL_FILES",
+      output: "[DATA] 当前在册人员: 2,847 | 外勤: 156 | 失踪: 23",
+      outputClass: "",
+    },
+    {
+      cmd: "QUERY_POWER_GRID_STATUS",
+      output: "[GRID] 主电网负载: 67% | 备用电源: 就绪",
+      outputClass: "",
+    },
+  ];
+
+  let lineIndex = 0;
+  const terminalBody = document.getElementById("terminal-body");
+  const MAX_CHILDREN = 15;
+
+  function sleep(ms: number): Promise<void> {
+    return new Promise((r) => setTimeout(r, ms));
+  }
+
+  function removeOldest() {
+    while (terminalBody && terminalBody.children.length > MAX_CHILDREN) {
+      terminalBody.removeChild(terminalBody.firstChild!);
+    }
+  }
+
+  function scrollToBottom() {
+    if (terminalBody) terminalBody.scrollTop = terminalBody.scrollHeight;
+  }
+
+  function getCursor(): HTMLElement | null {
+    const cursors = terminalBody?.querySelectorAll(".terminal-cursor");
+    if (!cursors || cursors.length === 0) return null;
+    return cursors[cursors.length - 1] as HTMLElement;
+  }
+
+  async function typeCommand(cmd: string): Promise<void> {
+    const cursor = getCursor();
+    if (!cursor) return;
+
+    for (let i = 0; i < cmd.length; i++) {
+      cursor.insertAdjacentText("beforebegin", cmd[i]);
+      scrollToBottom();
+      await sleep(50);
+    }
+  }
+
+  function showOutput(text: string): void {
+    const cursor = getCursor();
+    if (!cursor || !terminalBody) return;
+
+    const line = cursor.parentElement!;
+    const outputDiv = document.createElement("div");
+    outputDiv.className = "terminal-output";
+    outputDiv.innerHTML = text.replace(/\n/g, "<br/>");
+    line.after(outputDiv);
+
+    const newLine = document.createElement("div");
+    newLine.className = "terminal-line";
+    newLine.innerHTML = '<span class="terminal-prompt">C:\\ATOMIC7&gt;</span> <span id="terminal-cursor" class="terminal-cursor"></span>';
+    outputDiv.after(newLine);
+
+    removeOldest();
+    scrollToBottom();
+  }
+
+  async function runSequence() {
+    const start = lineIndex % terminalLines.length;
+    const count = Math.min(terminalLines.length, 7);
+
+    for (let i = 0; i < count; i++) {
+      const idx = (start + i) % terminalLines.length;
+      const item = terminalLines[idx];
+      await typeCommand(item.cmd);
+      await sleep(800);
+      showOutput(item.output);
+      await sleep(2500);
+    }
+
+    lineIndex += count;
+    setTimeout(runSequence, 2000);
+  }
+
+  setTimeout(runSequence, 2000);
+</script>
+
+<style is:global>
+  .terminal-screen {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .terminal-screen::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 2px,
+      rgba(0, 0, 0, 0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .terminal-prompt {
+    color: var(--color-atomic-orange);
+  }
+
+  .terminal-output {
+    color: var(--color-crt-green-dim);
+    padding-left: 16px;
+    border-left: 1px solid rgba(51, 255, 102, 0.2);
+    margin: 8px 0;
+  }
+
+  .terminal-warning {
+    color: var(--color-atomic-orange);
+  }
+
+  .terminal-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background: var(--color-crt-green);
+    animation: cursor-blink 1s step-end infinite;
+    vertical-align: text-bottom;
+    margin-left: 4px;
+  }
+
+  .terminal-line {
+    margin-bottom: 4px;
+  }
+</style>

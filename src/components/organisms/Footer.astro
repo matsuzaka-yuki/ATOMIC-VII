@@ -1,0 +1,85 @@
+---
+import VacuumTube from "../atoms/VacuumTube.astro";
+---
+
+<footer
+  class="px-6 pt-10 pb-6"
+  style="background: #141210; border-top: 2px solid var(--color-border-metal);"
+>
+  <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+    <div>
+      <div
+        class="font-heading text-xl font-bold mb-3 tracking-[4px]"
+        style="color: var(--color-atomic-orange);"
+      >
+        ATOMIC-7
+      </div>
+      <p class="text-xs leading-[1.7] mb-5" style="color: var(--color-text-secondary);">
+        ATOMIC-7核子前沿研究所——成立于1957年，致力于核子能技术的和平利用与前沿探索。我们相信，原子的力量将照亮人类文明的永恒之光。
+      </p>
+      <div class="flex gap-5">
+        <VacuumTube delay={0} />
+        <VacuumTube color="green" delay={0.5} />
+        <VacuumTube delay={1} />
+      </div>
+    </div>
+
+    <div>
+      <h4
+        class="font-heading text-sm font-semibold uppercase tracking-[2px] mb-4 pb-2"
+        style="color: var(--color-text-primary); border-bottom: 1px solid var(--color-border-metal);"
+      >
+        研究部门
+      </h4>
+      <ul class="list-none">
+        {["聚变能源部", "动力装甲部", "量子通讯部", "辐射医学部", "废土生态部"].map((item) => (
+          <li class="mb-2">
+            <a href="#" class="footer-link">{item}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h4
+        class="font-heading text-sm font-semibold uppercase tracking-[2px] mb-4 pb-2"
+        style="color: var(--color-text-primary); border-bottom: 1px solid var(--color-border-metal);"
+      >
+        设施导航
+      </h4>
+      <ul class="list-none">
+        {["主控中心", "反应堆大厅", "武器实验室", "居住区", "地表出口"].map((item) => (
+          <li class="mb-2">
+            <a href="#" class="footer-link">{item}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h4
+        class="font-heading text-sm font-semibold uppercase tracking-[2px] mb-4 pb-2"
+        style="color: var(--color-text-primary); border-bottom: 1px solid var(--color-border-metal);"
+      >
+        安全协议
+      </h4>
+      <ul class="list-none">
+        {["辐射防护守则", "紧急疏散程序", "权限申请流程", "机密等级说明", "违禁物品清单"].map((item) => (
+          <li class="mb-2">
+            <a href="#" class="footer-link">{item}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div
+    class="max-w-[1400px] mx-auto pt-6 flex flex-wrap justify-between items-center gap-3 text-[11px]"
+    style="border-top: 1px solid var(--color-border-metal); color: var(--color-text-secondary);"
+  >
+    <span>© 1957-1962 ATOMIC-7 RESEARCH INSTITUTE // ALL RIGHTS RESERVED</span>
+    <span class="font-bold tracking-[2px]" style="color: var(--color-warning-red);">
+      ⛔ CLASSIFIED: TOP SECRET
+    </span>
+  </div>
+</footer>

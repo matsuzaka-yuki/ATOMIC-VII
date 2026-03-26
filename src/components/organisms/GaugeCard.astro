@@ -1,0 +1,24 @@
+---
+import MetalPanel from "../molecules/MetalPanel.astro";
+import GaugeVisual from "../molecules/GaugeVisual.astro";
+
+interface Props {
+  value: number;
+  unit: string;
+  label: string;
+  sublabel: string;
+  displayValue?: string;
+}
+
+const { value, unit, label, sublabel, displayValue } = Astro.props;
+---
+
+<MetalPanel class="p-6 text-center">
+  <GaugeVisual value={value} unit={unit} displayValue={displayValue} />
+  <div class="font-heading text-sm font-medium uppercase tracking-[2px] mb-1" style="color: var(--color-text-primary);">
+    {label}
+  </div>
+  <div class="text-[11px]" style="color: var(--color-text-secondary);">
+    {sublabel}
+  </div>
+</MetalPanel>

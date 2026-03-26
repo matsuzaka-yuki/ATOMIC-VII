@@ -1,0 +1,106 @@
+---
+import StatusIndicator from "../molecules/StatusIndicator.astro";
+import NavButton from "../molecules/NavButton.astro";
+import ArtDecoDivider from "../atoms/ArtDecoDivider.astro";
+import { navigation } from "../../data/navigation";
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props;
+---
+
+<header
+  class="sticky top-0 z-[1000]"
+  style="background: linear-gradient(180deg, #1e1b16 0%, var(--color-bg-dark) 100%); border-bottom: 3px solid var(--color-atomic-orange);"
+>
+  <div
+    class="flex flex-col md:flex-row items-center md:justify-between px-6 py-3 gap-2 md:gap-0"
+    style="border-bottom: 1px solid var(--color-border-metal);"
+  >
+    <div
+      class="font-heading font-bold text-[11px] tracking-[3px] uppercase px-4 py-1"
+      style="background: var(--color-warning-red); color: #fff; animation: blink-slow 3s ease-in-out infinite;"
+    >
+      ⛔ TOP SECRET // RESTRICTED ACCESS
+    </div>
+    <div class="flex items-center gap-5 text-[11px]" style="color: var(--color-text-secondary);">
+      <StatusIndicator color="green" label="REACTOR ONLINE" />
+      <StatusIndicator color="orange" label="RADIATION: 0.34 mSv/h" />
+      <span
+        id="datetime"
+        class="tracking-wider"
+        style="color: var(--color-crt-green); font-family: var(--font-typewriter);"
+      ></span>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between px-6 py-4">
+    <a href="/" class="flex items-center gap-4">
+      <div class="w-14 h-14 relative">
+        <div
+          class="w-full h-full border-2 rounded-full relative"
+          style="border-color: var(--color-atomic-orange); animation: rotate-slow 10s linear infinite;"
+        >
+          <div
+            class="absolute border-2 rounded-full"
+            style="border-color: var(--color-atomic-orange); width: 100%; height: 40%; top: 30%; left: 0; transform: rotate(60deg);"
+          ></div>
+          <div
+            class="absolute border-2 rounded-full"
+            style="border-color: var(--color-atomic-orange); width: 100%; height: 40%; top: 30%; left: 0; transform: rotate(-60deg);"
+          ></div>
+          <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full"
+            style="background: var(--color-atomic-orange); box-shadow: 0 0 10px var(--color-atomic-orange), 0 0 20px var(--color-atomic-orange-dim); animation: pulse-glow 2s ease-in-out infinite;"
+          ></div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <div
+          class="font-heading text-[28px] font-bold leading-none tracking-[4px]"
+          style="color: var(--color-atomic-orange); text-shadow: 0 0 20px rgba(232,101,26,0.3);"
+        >
+          ATOMIC-7
+        </div>
+        <div class="text-[10px] tracking-[6px] uppercase" style="color: var(--color-text-secondary);">
+          核子前沿研究所
+        </div>
+      </div>
+    </a>
+
+    <nav class="flex flex-wrap justify-center gap-1">
+      {navigation.map((item) => (
+        <NavButton
+          href={item.href}
+          label={item.label}
+          active={currentPath === item.href}
+        />
+      ))}
+    </nav>
+  </div>
+
+  <ArtDecoDivider diamonds={2} />
+</header>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+    const el = document.getElementById("datetime");
+    if (el) {
+      const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      };
+      el.textContent = now.toLocaleString("zh-CN", options);
+    }
+  }
+  updateDateTime();
+  setInterval(updateDateTime, 1000);
+</script>
