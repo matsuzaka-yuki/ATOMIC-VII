@@ -1,0 +1,21 @@
+---
+import SectionHeader from "../molecules/SectionHeader.astro";
+import TimelineItem from "../molecules/TimelineItem.astro";
+import type { TimelineEvent } from "../../data/archives";
+
+interface Props {
+  events: TimelineEvent[];
+}
+
+const { events } = Astro.props;
+---
+
+<section class="py-16 px-6 timeline-section">
+  <SectionHeader tag="Project Chronicle" label="研究所编年史" />
+
+  <div class="timeline-container">
+    {events.map((event) => (
+      <TimelineItem {...event} />
+    ))}
+  </div>
+</section>

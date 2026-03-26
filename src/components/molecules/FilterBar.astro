@@ -1,0 +1,37 @@
+---
+import Rivet from "../atoms/Rivet.astro";
+
+const filters = [
+  { value: "all", label: "全部" },
+  { value: "top-secret", label: "绝密" },
+  { value: "secret", label: "机密" },
+  { value: "confidential", label: "内部" },
+  { value: "unclassified", label: "公开" },
+];
+---
+
+<div class="filter-bar metal-panel-bg">
+  <Rivet position="tl" />
+  <Rivet position="tr" />
+  <Rivet position="bl" />
+  <Rivet position="br" />
+  <span class="filter-label">◉ 筛选：</span>
+  {filters.map((f, i) => (
+    <button
+      class={`filter-btn${i === 0 ? " active" : ""}`}
+      data-filter={f.value}
+    >
+      {f.label}
+    </button>
+  ))}
+  <input
+    type="text"
+    class="filter-search"
+    placeholder="输入档案编号或关键词搜索..."
+    id="searchInput"
+  />
+  <div class="filter-stats">
+    显示 <span id="visibleCount">8</span> / 8 份档案
+  </div>
+</div>
+

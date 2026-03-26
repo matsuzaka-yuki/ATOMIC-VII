@@ -1,0 +1,34 @@
+---
+import type { Document } from "../../data/archives";
+import ClassificationBadge from "../atoms/ClassificationBadge.astro";
+
+interface Props extends Document {}
+
+const { id, title, cls, clsName, author, date, pages, keywords, description, tags } = Astro.props;
+---
+
+<div
+  class="doc-card metal-panel-bg fade-in"
+  data-cls={cls}
+  data-keywords={keywords}
+>
+  <div class="doc-card-header">
+    <span class="doc-id">{id}</span>
+    <ClassificationBadge level={cls} />
+  </div>
+  <h3 class="doc-title">{title}</h3>
+  <div class="doc-meta">
+    <span class="doc-meta-item">{author}</span>
+    <span class="doc-meta-item">{date}</span>
+    <span class="doc-meta-item">{pages}</span>
+  </div>
+  <p class="doc-description">{description}</p>
+  <div class="doc-footer">
+    <div class="doc-tags">
+      {tags.map((tag) => (
+        <span class="doc-tag">{tag}</span>
+      ))}
+    </div>
+    <span class="doc-action">查阅</span>
+  </div>
+</div>

@@ -1,0 +1,397 @@
+---
+import Layout from "../components/layouts/Layout.astro";
+import Breadcrumb from "../components/molecules/Breadcrumb.astro";
+import SectionHeader from "../components/molecules/SectionHeader.astro";
+import MetalPanel from "../components/molecules/MetalPanel.astro";
+import ArtDecoDivider from "../components/atoms/ArtDecoDivider.astro";
+import VacuumTube from "../components/atoms/VacuumTube.astro";
+import { protocols, clearanceLevels, incidents, personnelDB, prohibitedItems } from "../data/security";
+
+const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
+
+const classificationLabelMap: Record<string, string> = {
+  "top-secret": "TOP SECRET",
+  secret: "SECRET",
+  confidential: "CONFIDENTIAL",
+  unclassified: "UNCLASSIFIED",
+};
+---
+
+<Layout title="ATOMIC-7 // \u5B89\u5168\u534F\u8BAE" currentPath="/security">
+  <div class="breadcrumb-security py-5 px-6 max-w-[1400px] mx-auto text-[12px] text-[var(--color-text-secondary)]">
+    <a href="/" class="text-[var(--color-text-secondary)] no-underline hover:text-[var(--color-crt-green)] transition-colors">ATOMIC-7</a>
+    <span class="separator mx-2 text-[var(--color-border-metal)]">›</span>
+    <span class="current text-[var(--color-atomic-orange)]">\u5B89\u5168\u534F\u8BAE</span>
+  </div>
+
+  <!-- DEFCON Alert -->
+  <section class="alert-section fade-in">
+    <div class="alert-panel metal-panel">
+      <div class="rivet rivet-tl"></div>
+      <div class="rivet rivet-tr"></div>
+      <div class="rivet rivet-bl"></div>
+      <div class="rivet rivet-br"></div>
+
+      <div class="alert-header">
+        <div class="alert-title-group">
+          <div class="alert-icon">⚠</div>
+          <div class="alert-title-text">
+            <h2>DEFENSE CONDITION STATUS</h2>
+            <div class="defcon-level">LEVEL 3 <span class="level-label">- ELEVATED</span></div>
+          </div>
+        </div>
+        <div class="alert-timestamp">
+          <div>\u6700\u540E\u66F4\u65B0: 1962.03.15 08:42:17</div>
+          <div class="blink">● LIVE MONITORING</div>
+        </div>
+      </div>
+
+      <div class="defcon-bar-container">
+        <div class="defcon-bar-label">THREAT ASSESSMENT SPECTRUM</div>
+        <div class="defcon-bar">
+          <div class="defcon-segment level-1">L1</div>
+          <div class="defcon-segment level-2">L2</div>
+          <div class="defcon-segment level-3 active">L3</div>
+          <div class="defcon-segment level-4">L4</div>
+          <div class="defcon-segment level-5">L5</div>
+        </div>
+      </div>
+
+      <div class="alert-stats">
+        <div class="alert-stat orange">
+          <div class="alert-stat-label">\u5F53\u524D\u5A01\u80C1\u8BC4\u4F30</div>
+          <div class="alert-stat-value orange">\u4E2D\u7B49</div>
+          <div class="alert-stat-sub">MODERATE THREAT</div>
+        </div>
+        <div class="alert-stat green">
+          <div class="alert-stat-label">\u5DE1\u903B\u961F\u72B6\u6001</div>
+          <div class="alert-stat-value green">12/12</div>
+          <div class="alert-stat-sub">ALL UNITS ACTIVE</div>
+        </div>
+        <div class="alert-stat orange">
+          <div class="alert-stat-label">\u5C01\u9501\u533A\u57DF\u6570\u91CF</div>
+          <div class="alert-stat-value orange">3</div>
+          <div class="alert-stat-sub">SECTORS LOCKED</div>
+        </div>
+        <div class="alert-stat red">
+          <div class="alert-stat-label">24\u5C0F\u65F6\u4E8B\u4EF6\u6570</div>
+          <div class="alert-stat-value red">7</div>
+          <div class="alert-stat-sub">INCIDENTS RECORDED</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex justify-center gap-6 my-8">
+    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
+  </div>
+
+  <!-- Security Protocols -->
+  <section class="py-16 px-6 fade-in">
+    <div class="text-center mb-12">
+      <div class="section-tag-security inline-flex items-center gap-2 text-[11px] text-[var(--color-atomic-orange)] tracking-[4px] uppercase mb-4">
+        <span class="inline-block w-10 h-px bg-gradient-to-r from-transparent to-[var(--color-atomic-orange)]"></span>
+        SECURITY PROTOCOLS MANUAL
+        <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
+      </div>
+      <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
+        \u5B89\u5168\u534F\u8BAE\u624B\u518C
+      </h2>
+    </div>
+
+    <div class="protocols-grid">
+      {protocols.map((p) => (
+        <div class="protocol-card metal-panel">
+          <div class="rivet rivet-tl"></div>
+          <div class="rivet rivet-tr"></div>
+          <div class="rivet rivet-bl"></div>
+          <div class="rivet rivet-br"></div>
+          <div class="protocol-header">
+            <span class="protocol-id">{p.id}</span>
+            <span class={`protocol-classification-badge ${p.classification}`}>{classificationLabelMap[p.classification]}</span>
+          </div>
+          <h3 class="protocol-title">{p.title}</h3>
+          <div class="protocol-category">{p.category}</div>
+          <p class="protocol-description">{p.description}</p>
+          <div class="protocol-footer">
+            <div class={`protocol-status ${p.status}`}>
+              <span class="dot"></span>
+              {p.statusName}
+            </div>
+            <span class="protocol-date">\u66F4\u65B0: {p.date}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="flex justify-center gap-6 my-8">
+    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
+  </div>
+
+  <!-- Clearance Levels -->
+  <section class="py-16 px-6 security-clearance-section fade-in">
+    <div class="text-center mb-12">
+      <div class="section-tag-security inline-flex items-center gap-2 text-[11px] text-[var(--color-atomic-orange)] tracking-[4px] uppercase mb-4">
+        <span class="inline-block w-10 h-px bg-gradient-to-r from-transparent to-[var(--color-atomic-orange)]"></span>
+        ACCESS AUTHORIZATION
+        <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
+      </div>
+      <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
+        \u6743\u9650\u7B49\u7EA7\u7CFB\u7EDF
+      </h2>
+    </div>
+
+    <div class="security-clearance-container">
+      {clearanceLevels.map((cl) => (
+        <div class={`clearance-level clearance-l${cl.level}`}>
+          <div class="clearance-bar">
+            <div class="clearance-level-badge">
+              <span class="level-icon">{cl.icon}</span>
+              <span class="level-code">{cl.code}</span>
+            </div>
+            <div class="clearance-info">
+              <div>
+                <div class="clearance-name">{cl.name}</div>
+                <div class="clearance-desc">{cl.nameEn}</div>
+              </div>
+              <div class="clearance-access">{cl.access}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <div class="flex justify-center gap-6 my-8">
+    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
+  </div>
+
+  <!-- Incident Log -->
+  <section class="py-16 px-6 fade-in">
+    <div class="text-center mb-12">
+      <div class="section-tag-security inline-flex items-center gap-2 text-[11px] text-[var(--color-atomic-orange)] tracking-[4px] uppercase mb-4">
+        <span class="inline-block w-10 h-px bg-gradient-to-r from-transparent to-[var(--color-atomic-orange)]"></span>
+        INCIDENT REPORTS
+        <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
+      </div>
+      <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
+        \u5B89\u5168\u4E8B\u4EF6\u65E5\u5FD7
+      </h2>
+    </div>
+
+    <div class="incident-container">
+      <div class="incident-timeline">
+        {incidents.map((inc) => (
+          <div class={`incident-entry ${inc.status} metal-panel`}>
+            <div class="rivet rivet-tl"></div>
+            <div class="rivet rivet-tr"></div>
+            <div class="rivet rivet-bl"></div>
+            <div class="rivet rivet-br"></div>
+            <div class="incident-header">
+              <div class="incident-meta">
+                <span class="incident-date">{inc.date}</span>
+                <span class={`incident-type ${inc.type}`}>{inc.typeName}</span>
+              </div>
+              <span class={`incident-status ${inc.status}`}>{inc.statusName}</span>
+            </div>
+            <p class="incident-description">{inc.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="flex justify-center gap-6 my-8">
+    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
+  </div>
+
+  <!-- Personnel Scanner -->
+  <section class="py-16 px-6 scanner-section fade-in">
+    <div class="text-center mb-12">
+      <div class="section-tag-security inline-flex items-center gap-2 text-[11px] text-[var(--color-atomic-orange)] tracking-[4px] uppercase mb-4">
+        <span class="inline-block w-10 h-px bg-gradient-to-r from-transparent to-[var(--color-atomic-orange)]"></span>
+        IDENTITY VERIFICATION
+        <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
+      </div>
+      <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
+        \u4EBA\u5458\u8EAB\u4EFD\u626B\u63CF
+      </h2>
+    </div>
+
+    <div class="scanner-container">
+      <div class="scanner-panel metal-panel">
+        <div class="rivet rivet-tl"></div>
+        <div class="rivet rivet-tr"></div>
+        <div class="rivet rivet-bl"></div>
+        <div class="rivet rivet-br"></div>
+
+        <div class="scanner-header">
+          <span class="scanner-title">◉ PERSONNEL ID SCANNER</span>
+          <span class="scanner-status">
+            <span class="status-dot green"></span>
+            SYSTEM READY
+          </span>
+        </div>
+
+        <div class="scanner-body">
+          <div class="scanner-screen">
+            <div class="scanner-input-group">
+              <div class="scanner-prompt">C:\ATOMIC7\SECURITY> ENTER PERSONNEL ID CODE:</div>
+              <input type="text" class="scanner-input" id="scanner-input" placeholder="\u8F93\u5165\u4EBA\u5458\u7F16\u53F7 (\u4F8B: T-0847)" maxlength="10" />
+              <button class="scanner-btn" id="scan-btn">\u6267\u884C\u626B\u63CF</button>
+            </div>
+
+            <div class="scanner-result" id="scanner-result">
+              <div class="scanner-result-placeholder" id="result-placeholder">
+                <div class="icon">⊞</div>
+                <div>AWAITING ID INPUT...</div>
+              </div>
+
+              <div class="personnel-record" id="record-template">
+                <div class="record-header">
+                  <div class="record-name" id="rec-name">\u2014</div>
+                  <div class="record-clearance l3" id="rec-clearance">L3</div>
+                </div>
+                <div class="record-fields">
+                  <div class="record-field">
+                    <span class="record-field-label">\u4EBA\u5458\u7F16\u53F7</span>
+                    <span class="record-field-value" id="rec-id">\u2014</span>
+                  </div>
+                  <div class="record-field">
+                    <span class="record-field-label">\u6743\u9650\u7B49\u7EA7</span>
+                    <span class="record-field-value" id="rec-level">\u2014</span>
+                  </div>
+                  <div class="record-field">
+                    <span class="record-field-label">\u6240\u5C5E\u90E8\u95E8</span>
+                    <span class="record-field-value" id="rec-dept">\u2014</span>
+                  </div>
+                  <div class="record-field">
+                    <span class="record-field-label">\u6700\u540E\u8BA4\u8BC1</span>
+                    <span class="record-field-value" id="rec-auth">\u2014</span>
+                  </div>
+                  <div class="record-field">
+                    <span class="record-field-label">\u751F\u7269\u7279\u5F81</span>
+                    <span class="record-field-value verified" id="rec-bio">\u2014</span>
+                  </div>
+                  <div class="record-field">
+                    <span class="record-field-label">\u5B89\u5168\u72B6\u6001</span>
+                    <span class="record-field-value" id="rec-status">\u2014</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex justify-center gap-6 my-8">
+    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
+  </div>
+
+  <!-- Prohibited Items -->
+  <section class="py-16 px-6 fade-in">
+    <div class="text-center mb-12">
+      <div class="section-tag-security inline-flex items-center gap-2 text-[11px] text-[var(--color-atomic-orange)] tracking-[4px] uppercase mb-4">
+        <span class="inline-block w-10 h-px bg-gradient-to-r from-transparent to-[var(--color-atomic-orange)]"></span>
+        RESTRICTED ITEMS
+        <span class="inline-block w-10 h-px bg-gradient-to-l from-transparent to-[var(--color-atomic-orange)]"></span>
+      </div>
+      <h2 class="section-title-security font-heading text-[42px] font-bold text-[var(--color-text-primary)] uppercase tracking-[4px]">
+        \u8FDD\u7981\u7269\u54C1\u6E05\u5355
+      </h2>
+    </div>
+
+    <div class="prohibited-container">
+      <div class="prohibited-panel metal-panel">
+        <div class="rivet rivet-tl"></div>
+        <div class="rivet rivet-tr"></div>
+        <div class="rivet rivet-bl"></div>
+        <div class="rivet rivet-br"></div>
+
+        <table class="prohibited-table">
+          <thead>
+            <tr>
+              <th>\u7C7B\u522B</th>
+              <th>\u7269\u54C1\u63CF\u8FF0</th>
+              <th>\u9650\u5236\u7EA7\u522B</th>
+            </tr>
+          </thead>
+          <tbody>
+            {prohibitedItems.map((item) => (
+              <tr>
+                <td class="prohibited-category">{item.category}</td>
+                <td class="prohibited-item">{item.item}</td>
+                <td><span class={`prohibited-status ${item.restriction}`}>{item.restrictionName}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="flex justify-center gap-6 my-8">
+    <VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube /><VacuumTube />
+  </div>
+</Layout>
+
+<script define:vars={{ personnelDB: JSON.stringify(personnelDB) }}>
+  const db = JSON.parse(personnelDB);
+
+  const scannerInput = document.getElementById("scanner-input");
+  const scanBtn = document.getElementById("scan-btn");
+  const resultPlaceholder = document.getElementById("result-placeholder");
+  const recordTemplate = document.getElementById("record-template");
+
+  function performScan() {
+    const code = scannerInput.value.trim().toUpperCase();
+
+    if (!code) {
+      resultPlaceholder.innerHTML = '<div class="icon">\u2298</div><div>ERROR: \u8BF7\u8F93\u5165\u6709\u6548\u7F16\u53F7</div>';
+      resultPlaceholder.style.display = "block";
+      recordTemplate.classList.remove("active");
+      return;
+    }
+
+    const record = db[code];
+
+    if (!record) {
+      resultPlaceholder.innerHTML = '<div class="icon">\u2298</div><div>ERROR: \u672A\u627E\u5230\u8BB0\u5F55 [' + code + ']</div><div style="margin-top:8px; font-size:10px; color: var(--color-warning-red);">ACCESS DENIED</div>';
+      resultPlaceholder.style.display = "block";
+      recordTemplate.classList.remove("active");
+      return;
+    }
+
+    document.getElementById("rec-name").textContent = record.name;
+    document.getElementById("rec-id").textContent = record.id;
+    document.getElementById("rec-level").textContent = record.level;
+    document.getElementById("rec-dept").textContent = record.dept;
+    document.getElementById("rec-auth").textContent = record.auth;
+    document.getElementById("rec-bio").textContent = record.bio;
+    document.getElementById("rec-status").textContent = record.status;
+
+    const clearanceBadge = document.getElementById("rec-clearance");
+    clearanceBadge.textContent = record.level.split(" ")[0];
+    clearanceBadge.className = "record-clearance " + record.clearanceClass;
+
+    const statusEl = document.getElementById("rec-status");
+    if (record.status.includes("\u6B63\u5E38") || record.status.includes("\u5DF2\u9A8C\u8BC1")) {
+      statusEl.className = "record-field-value verified";
+    } else if (record.status.includes("\u53D7\u9650") || record.status.includes("\u5931\u8054")) {
+      statusEl.className = "record-field-value warning";
+    }
+
+    resultPlaceholder.style.display = "none";
+    recordTemplate.classList.remove("active");
+    void recordTemplate.offsetWidth;
+    recordTemplate.classList.add("active");
+  }
+
+  scanBtn.addEventListener("click", performScan);
+  scannerInput.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") performScan();
+  });
+</script>

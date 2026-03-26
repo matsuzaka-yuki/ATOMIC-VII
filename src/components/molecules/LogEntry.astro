@@ -1,0 +1,37 @@
+---
+import Rivet from "../atoms/Rivet.astro";
+import type { ExperimentLog } from "../../data/archives";
+
+interface Props extends ExperimentLog {}
+
+const { date, year, experimentId, status, statusName, title, description, data } = Astro.props;
+---
+
+<div class="log-entry fade-in">
+  <div class="log-timeline">
+    <div>
+      <div class="log-date">{date}</div>
+      <div class="log-year">{year}</div>
+    </div>
+    <div class="log-connector"></div>
+  </div>
+  <div class="log-card metal-panel-bg">
+    <Rivet position="tl" />
+    <Rivet position="tr" />
+    <div class="log-header">
+      <span class="log-experiment-id">{experimentId}</span>
+      <span class={`log-status log-status-${status}`}>{statusName}</span>
+    </div>
+    <h3 class="log-title">{title}</h3>
+    <p class="log-description">{description}</p>
+    <div class="log-data-row">
+      {data.map((item) => (
+        <span class="log-data-item">
+          <span class="log-data-label">{item.label}</span>
+          <span class={item.red ? "log-data-value-red" : "log-data-value"}>{item.value}</span>
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
+

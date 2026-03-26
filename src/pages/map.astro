@@ -1,0 +1,387 @@
+---
+import Layout from "../components/layouts/Layout.astro";
+import Breadcrumb from "../components/molecules/Breadcrumb.astro";
+import ArtDecoDivider from "../components/atoms/ArtDecoDivider.astro";
+import MetalPanel from "../components/molecules/MetalPanel.astro";
+import Rivet from "../components/atoms/Rivet.astro";
+import VacuumTube from "../components/atoms/VacuumTube.astro";
+import { utilities } from "../data/map";
+
+const breadcrumbItems = [{ label: "ATOMIC-7", href: "/" }];
+---
+
+<Layout title="ATOMIC-7 // 设施地图" currentPath="/map">
+  <Breadcrumb items={breadcrumbItems} current="设施地图" />
+
+  <section class="py-10 px-6">
+    <div class="text-center mb-10 fade-in">
+      <div
+        class="inline-flex items-center gap-2 text-[11px] tracking-[4px] uppercase mb-4"
+        style="color: var(--color-atomic-orange);"
+      >
+        <span class="block w-10 h-px" style="background: linear-gradient(90deg, transparent, var(--color-atomic-orange));"></span>
+        <span>Facility Schematic</span>
+        <span class="block w-10 h-px" style="background: linear-gradient(90deg, var(--color-atomic-orange), transparent);"></span>
+      </div>
+      <h2 class="font-heading text-5xl font-bold uppercase tracking-[4px] section-title-responsive" style="color: var(--color-text-primary);">地下设施剖面图</h2>
+      <p class="text-[12px] mt-2 tracking-[2px]" style="color: var(--color-text-secondary);">NEVADA PROVING GROUND // SITE-7 // LAT 37.1141° N, LONG 116.0267° W</p>
+    </div>
+
+    <div class="floor-selector metal-panel-bg">
+      <Rivet position="tl" />
+      <Rivet position="tr" />
+      <Rivet position="bl" />
+      <Rivet position="br" />
+      <span class="floor-selector-label">◉ 层级：</span>
+      <button class="floor-btn active" data-floor="all">全部<span class="floor-sub">ALL LEVELS</span></button>
+      <button class="floor-btn" data-floor="b1">B1<span class="floor-sub">-12m</span></button>
+      <button class="floor-btn" data-floor="b2">B2<span class="floor-sub">-28m</span></button>
+      <button class="floor-btn" data-floor="b3">B3<span class="floor-sub">-47m</span></button>
+      <button class="floor-btn" data-floor="b4">B4<span class="floor-sub">-68m</span></button>
+      <button class="floor-btn" data-floor="b5">B5<span class="floor-sub">-91m</span></button>
+      <button class="floor-btn locked" data-floor="b6" disabled>B6<span class="floor-sub">-112m</span></button>
+      <button class="floor-btn locked" data-floor="b7" disabled>B7<span class="floor-sub">-127m</span></button>
+    </div>
+
+    <div class="bunker-container fade-in">
+      <div class="utilities-panel">
+        {utilities.map((u) => (
+          <div class="utility-card metal-panel-bg">
+            <Rivet position="tl" />
+            <Rivet position="tr" />
+            <div class="utility-header">
+              <span class="utility-name">{u.icon} {u.name}</span>
+              <span class={`utility-status util-${u.status}`}>{u.statusText}</span>
+            </div>
+            <div class="utility-bar">
+              <div class={`utility-fill fill-${u.fillClass}`} style={`width: ${u.fillPercent}%`}></div>
+            </div>
+            <div class="utility-value">{u.value}</div>
+            <div class="utility-detail">{u.detail}</div>
+          </div>
+        ))}
+        <div class="flex justify-center gap-6 mt-2">
+          <VacuumTube /><VacuumTube /><VacuumTube />
+        </div>
+      </div>
+
+      <div class="bunker-map">
+        <Rivet position="tl" />
+        <Rivet position="tr" />
+        <Rivet position="bl" />
+        <Rivet position="br" />
+
+        <div class="map-title-bar">
+          <h3>◉ ATOMIC-7 设施剖面</h3>
+          <span class="map-coords">比例 1:500 | 垂直深度 127m</span>
+        </div>
+
+        <div class="bunker-layers">
+          <div class="surface-layer">
+            <span class="surface-label">地表 SURFACE</span>
+            <div class="surface-content">
+              <span class="surface-zone" data-zone="gate">主入口大门</span>
+              <span class="surface-zone" data-zone="helipad">直升机坪</span>
+              <span class="surface-zone" data-zone="solar">太阳能阵列</span>
+              <span class="surface-zone" data-zone="antenna">通讯天线群</span>
+              <span class="surface-zone" data-zone="guard">警卫哨塔</span>
+              <span class="surface-zone" data-zone="parking">装甲车库</span>
+            </div>
+          </div>
+
+          <div class="floor-layer" data-floor="b1">
+            <div class="floor-layer-label"><span class="level">B1</span><span class="depth">-12m</span></div>
+            <div class="floor-zones">
+              <div class="zone-block" data-zone="reception"><span class="zone-clearance cls-l1">L1</span><span class="zone-icon">🏠</span><span class="zone-name">接待大厅</span><span class="zone-personnel">12人</span></div>
+              <div class="zone-block" data-zone="security"><span class="zone-clearance cls-l2">L2</span><span class="zone-icon">🔐</span><span class="zone-name">安检区</span><span class="zone-personnel">8人</span></div>
+              <div class="zone-block" data-zone="armory-b1"><span class="zone-clearance cls-l3">L3</span><span class="zone-icon">🔫</span><span class="zone-name">武器库</span><span class="zone-personnel">4人</span></div>
+              <div class="zone-block" data-zone="medical"><span class="zone-clearance cls-l2">L2</span><span class="zone-icon">🏥</span><span class="zone-name">医疗中心</span><span class="zone-personnel">23人</span></div>
+              <div class="zone-block" data-zone="decontam"><span class="zone-clearance cls-l1">L1</span><span class="zone-icon">🚿</span><span class="zone-name">洗消通道</span><span class="zone-personnel">6人</span></div>
+            </div>
+          </div>
+
+          <div class="floor-layer" data-floor="b2">
+            <div class="floor-layer-label"><span class="level">B2</span><span class="depth">-28m</span></div>
+            <div class="floor-zones">
+              <div class="zone-block" data-zone="quarters"><span class="zone-clearance cls-l1">L1</span><span class="zone-icon">🛏</span><span class="zone-name">居住区</span><span class="zone-personnel">347人</span></div>
+              <div class="zone-block" data-zone="cafeteria"><span class="zone-clearance cls-l1">L1</span><span class="zone-icon">🍽</span><span class="zone-name">食堂</span><span class="zone-personnel">89人</span></div>
+              <div class="zone-block" data-zone="recreation"><span class="zone-clearance cls-l1">L1</span><span class="zone-icon">🎮</span><span class="zone-name">娱乐区</span><span class="zone-personnel">45人</span></div>
+              <div class="zone-block" data-zone="storage-b2"><span class="zone-clearance cls-l2">L2</span><span class="zone-icon">📦</span><span class="zone-name">物资仓库</span><span class="zone-personnel">12人</span></div>
+            </div>
+          </div>
+
+          <div class="floor-layer" data-floor="b3">
+            <div class="floor-layer-label"><span class="level">B3</span><span class="depth">-47m</span></div>
+            <div class="floor-zones">
+              <div class="zone-block" data-zone="labs"><span class="zone-clearance cls-l3">L3</span><span class="zone-icon">🔬</span><span class="zone-name">通用实验室</span><span class="zone-personnel">67人</span></div>
+              <div class="zone-block" data-zone="radmed"><span class="zone-clearance cls-l3">L3</span><span class="zone-icon">☢</span><span class="zone-name">辐射医学部</span><span class="zone-personnel">34人</span></div>
+              <div class="zone-block zone-alert" data-zone="eco"><span class="zone-clearance cls-l3">L3</span><span class="zone-icon">🌱</span><span class="zone-name">生态实验室</span><span class="zone-personnel">18人</span></div>
+              <div class="zone-block" data-zone="water"><span class="zone-clearance cls-l2">L2</span><span class="zone-icon">💧</span><span class="zone-name">水处理中心</span><span class="zone-personnel">8人</span></div>
+            </div>
+          </div>
+
+          <div class="floor-layer" data-floor="b4">
+            <div class="floor-layer-label"><span class="level">B4</span><span class="depth">-68m</span></div>
+            <div class="floor-zones">
+              <div class="zone-block" data-zone="control"><span class="zone-clearance cls-l3">L3</span><span class="zone-icon">🎛</span><span class="zone-name">主控中心</span><span class="zone-personnel">42人</span></div>
+              <div class="zone-block" data-zone="quantum"><span class="zone-clearance cls-l4">L4</span><span class="zone-icon">📡</span><span class="zone-name">量子通讯部</span><span class="zone-personnel">29人</span></div>
+              <div class="zone-block" data-zone="server"><span class="zone-clearance cls-l3">L3</span><span class="zone-icon">🖥</span><span class="zone-name">数据中心</span><span class="zone-personnel">15人</span></div>
+              <div class="zone-block" data-zone="comms"><span class="zone-clearance cls-l2">L2</span><span class="zone-icon">📻</span><span class="zone-name">常规通讯室</span><span class="zone-personnel">11人</span></div>
+            </div>
+          </div>
+
+          <div class="floor-layer" data-floor="b5">
+            <div class="floor-layer-label"><span class="level">B5</span><span class="depth">-91m</span></div>
+            <div class="floor-zones">
+              <div class="zone-block" data-zone="reactor"><span class="zone-clearance cls-l4">L4</span><span class="zone-icon">⚛</span><span class="zone-name">反应堆大厅</span><span class="zone-personnel">38人</span></div>
+              <div class="zone-block" data-zone="cooling"><span class="zone-clearance cls-l3">L3</span><span class="zone-icon">❄</span><span class="zone-name">冷却系统</span><span class="zone-personnel">16人</span></div>
+              <div class="zone-block" data-zone="fuel"><span class="zone-clearance cls-l4">L4</span><span class="zone-icon">🛢</span><span class="zone-name">燃料储存</span><span class="zone-personnel">6人</span></div>
+            </div>
+          </div>
+
+          <div class="floor-layer locked-floor" data-floor="b6">
+            <div class="floor-layer-label"><span class="level" style="color: var(--color-warning-red);">B6</span><span class="depth">-112m</span></div>
+            <div class="floor-zones">
+              <div class="zone-block zone-locked"><span class="zone-name">[权限不足]</span></div>
+              <div class="zone-block zone-locked"><span class="zone-name">[权限不足]</span></div>
+              <div class="zone-block zone-locked"><span class="zone-name">[权限不足]</span></div>
+            </div>
+          </div>
+
+          <div class="floor-layer locked-floor" data-floor="b7">
+            <div class="floor-layer-label"><span class="level" style="color: var(--color-warning-red);">B7</span><span class="depth">-127m</span></div>
+            <div class="floor-zones">
+              <div class="zone-block zone-locked"><span class="zone-name">[权限不足]</span></div>
+              <div class="zone-block zone-locked"><span class="zone-name">[权限不足]</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-panel">
+        <div class="zone-detail-card metal-panel-bg" id="zoneDetail">
+          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
+          <div class="zone-detail-header">
+            <div class="zone-detail-floor" id="detailFloor">B4 // -68m</div>
+            <div class="zone-detail-name" id="detailName">主控中心</div>
+          </div>
+          <p class="zone-detail-desc" id="detailDesc">设施的核心指挥枢纽，配备全息投影战术地图、多屏监控阵列以及直接接入反应堆控制系统的主控台。所有楼层的实时数据在此汇总显示。</p>
+          <div class="zone-detail-stats">
+            <div class="zone-stat"><div class="zone-stat-label">当前人员</div><div class="zone-stat-value" id="detailPersonnel">42</div></div>
+            <div class="zone-stat"><div class="zone-stat-label">容量上限</div><div class="zone-stat-value" id="detailCapacity">60</div></div>
+            <div class="zone-stat"><div class="zone-stat-label">辐射水平</div><div class="zone-stat-value" id="detailRadiation">0.12</div></div>
+            <div class="zone-stat"><div class="zone-stat-label">温度</div><div class="zone-stat-value" id="detailTemp">22°C</div></div>
+          </div>
+          <div class="zone-clearance-req">
+            <div class="label">⚠ 所需安全许可</div>
+            <div class="value" id="detailClearance">LEVEL 3 - 机密</div>
+          </div>
+          <button class="zone-access-btn" id="accessBtn">请求进入权限</button>
+        </div>
+
+        <MetalPanel class="p-4">
+          <div style="font-size: 11px; color: var(--color-crt-green); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; text-shadow: 0 0 6px var(--color-crt-green-glow);">◉ 设施人员统计</div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="p-2.5 text-center" style="background: rgba(26,24,20,0.6); border: 1px solid var(--color-border-metal);">
+              <div class="text-[9px] mb-1" style="color: var(--color-text-secondary); letter-spacing: 1px;">在岗总数</div>
+              <div class="font-heading text-2xl font-bold" style="color: var(--color-crt-green); text-shadow: 0 0 8px var(--color-crt-green-glow);">847</div>
+            </div>
+            <div class="p-2.5 text-center" style="background: rgba(26,24,20,0.6); border: 1px solid var(--color-border-metal);">
+              <div class="text-[9px] mb-1" style="color: var(--color-text-secondary); letter-spacing: 1px;">外勤任务</div>
+              <div class="font-heading text-2xl font-bold" style="color: var(--color-atomic-orange); text-shadow: 0 0 8px rgba(232,101,26,0.4);">156</div>
+            </div>
+            <div class="p-2.5 text-center" style="background: rgba(26,24,20,0.6); border: 1px solid var(--color-border-metal);">
+              <div class="text-[9px] mb-1" style="color: var(--color-text-secondary); letter-spacing: 1px;">休眠舱内</div>
+              <div class="font-heading text-2xl font-bold" style="color: var(--color-matte-silver);">89</div>
+            </div>
+            <div class="p-2.5 text-center" style="background: rgba(26,24,20,0.6); border: 1px solid var(--color-border-metal);">
+              <div class="text-[9px] mb-1" style="color: var(--color-text-secondary); letter-spacing: 1px;">失踪/未知</div>
+              <div class="font-heading text-2xl font-bold" style="color: var(--color-warning-red); text-shadow: 0 0 8px rgba(196,30,30,0.4);">23</div>
+            </div>
+          </div>
+        </MetalPanel>
+
+        <div class="flex justify-center gap-6 mt-2">
+          <VacuumTube /><VacuumTube /><VacuumTube />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ArtDecoDivider diamonds={2} />
+
+  <section class="emergency-section">
+    <div class="emergency-container">
+      <div class="emergency-header fade-in">
+        <div class="inline-flex items-center gap-2 text-[11px] tracking-[4px] uppercase mb-4" style="color: var(--color-warning-red);">
+          <span class="block w-10 h-px" style="background: linear-gradient(90deg, transparent, var(--color-warning-red));"></span>
+          <span>⚠ Emergency Systems</span>
+          <span class="block w-10 h-px" style="background: linear-gradient(90deg, var(--color-warning-red), transparent);"></span>
+        </div>
+        <h2 class="emergency-title">应急系统状态</h2>
+      </div>
+
+      <div class="emergency-grid fade-in">
+        <MetalPanel class="emergency-card">
+          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
+          <div class="emergency-icon">🚪</div>
+          <div class="emergency-name">紧急疏散通道</div>
+          <span class="emergency-status em-ready">就绪</span>
+          <p class="emergency-detail">4条主疏散通道全部畅通<br />预计全设施疏散时间: 12分钟</p>
+        </MetalPanel>
+        <MetalPanel class="emergency-card">
+          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
+          <div class="emergency-icon">🔥</div>
+          <div class="emergency-name">灭火系统</div>
+          <span class="emergency-status em-ready">就绪</span>
+          <p class="emergency-detail">哈龙1301气体灭火覆盖全区域<br />B3生态实验室已切换为水基系统</p>
+        </MetalPanel>
+        <MetalPanel class="emergency-card">
+          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
+          <div class="emergency-icon">🛡</div>
+          <div class="emergency-name">防爆闸门</div>
+          <span class="emergency-status em-ready">就绪</span>
+          <p class="emergency-detail">12道主防爆闸门响应时间 &lt;3秒<br />B5以下区域闸门已加固</p>
+        </MetalPanel>
+        <MetalPanel class="emergency-card">
+          <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
+          <div class="emergency-icon">☢</div>
+          <div class="emergency-name">核生化防护</div>
+          <span class="emergency-status em-standby">待命</span>
+          <p class="emergency-detail">正压防护模式待命<br />碘化钾储备: 足够3000人72小时用量</p>
+        </MetalPanel>
+      </div>
+    </div>
+  </section>
+
+  <ArtDecoDivider diamonds={2} />
+
+  <section class="clearance-section">
+    <div class="clearance-container metal-panel-bg fade-in">
+      <Rivet position="tl" /><Rivet position="tr" /><Rivet position="bl" /><Rivet position="br" />
+      <div class="clearance-title">安全许可等级图例</div>
+      <div class="clearance-grid">
+        <div class="clearance-item"><span class="clearance-badge cls-l1">L1</span><span class="clearance-desc">公开 - 基础设施区域</span></div>
+        <div class="clearance-item"><span class="clearance-badge cls-l2">L2</span><span class="clearance-desc">内部 - 一般工作区域</span></div>
+        <div class="clearance-item"><span class="clearance-badge cls-l3">L3</span><span class="clearance-desc">机密 - 研究与指挥区域</span></div>
+        <div class="clearance-item"><span class="clearance-badge cls-l4">L4</span><span class="clearance-desc">绝密 - 核心设施区域</span></div>
+        <div class="clearance-item"><span class="clearance-badge cls-l5">L5</span><span class="clearance-desc">O5级 - 最高机密（仅限授权）</span></div>
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ zoneDataJson: JSON.stringify((await import("../data/map")).zoneData) }}>
+    const zoneData = JSON.parse(zoneDataJson);
+
+    const floorBtns = document.querySelectorAll(".floor-btn:not(.locked)");
+    const floorLayers = document.querySelectorAll(".floor-layer");
+    const surfaceLayer = document.querySelector(".surface-layer");
+
+    floorBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        floorBtns.forEach((b) => b.classList.remove("active"));
+        this.classList.add("active");
+        const floor = this.dataset.floor;
+        if (floor === "all") {
+          surfaceLayer.style.display = "";
+          floorLayers.forEach((l) => {
+            l.classList.remove("highlighted", "dimmed");
+            l.style.display = "";
+          });
+        } else {
+          surfaceLayer.style.display = "";
+          floorLayers.forEach((l) => {
+            if (l.dataset.floor === floor) {
+              l.classList.add("highlighted");
+              l.classList.remove("dimmed");
+              l.style.display = "";
+            } else {
+              l.classList.remove("highlighted");
+              l.classList.add("dimmed");
+              l.style.display = "";
+            }
+          });
+        }
+      });
+    });
+
+    const detailFloor = document.getElementById("detailFloor");
+    const detailName = document.getElementById("detailName");
+    const detailDesc = document.getElementById("detailDesc");
+    const detailPersonnel = document.getElementById("detailPersonnel");
+    const detailCapacity = document.getElementById("detailCapacity");
+    const detailRadiation = document.getElementById("detailRadiation");
+    const detailTemp = document.getElementById("detailTemp");
+    const detailClearance = document.getElementById("detailClearance");
+    const accessBtn = document.getElementById("accessBtn");
+
+    function updateZoneDetail(zoneId) {
+      const data = zoneData[zoneId];
+      if (!data) return;
+      detailFloor.textContent = data.floor;
+      detailName.textContent = data.name;
+      detailDesc.textContent = data.desc;
+      detailPersonnel.textContent = data.personnel;
+      detailCapacity.textContent = data.capacity;
+      detailRadiation.textContent = data.radiation + " mSv/h";
+      detailTemp.textContent = data.temp;
+      detailClearance.textContent = data.clearance;
+      const radVal = parseFloat(data.radiation);
+      detailRadiation.className = radVal > 2 ? "zone-stat-value red" : "zone-stat-value";
+      const clsLevel = parseInt(data.clearance.match(/LEVEL (\d+)/)?.[1] || "1");
+      if (clsLevel >= 4 || data.alert) {
+        accessBtn.className = "zone-access-btn denied";
+        accessBtn.textContent = "\u26D4 权限不足";
+      } else if (clsLevel >= 3) {
+        accessBtn.className = "zone-access-btn";
+        accessBtn.textContent = "请求进入权限";
+      } else {
+        accessBtn.className = "zone-access-btn";
+        accessBtn.textContent = "\u2713 刷卡进入";
+      }
+    }
+
+    document.querySelectorAll(".zone-block:not(.zone-locked)").forEach((zone) => {
+      zone.addEventListener("click", function () {
+        const zoneId = this.dataset.zone;
+        if (zoneId) updateZoneDetail(zoneId);
+      });
+    });
+
+    document.querySelectorAll(".surface-zone").forEach((zone) => {
+      zone.addEventListener("click", function () {
+        const zoneId = this.dataset.zone;
+        if (zoneId) updateZoneDetail(zoneId);
+      });
+    });
+
+    accessBtn.addEventListener("click", function () {
+      if (this.classList.contains("denied")) {
+        this.textContent = "\u26D4 权限被拒绝";
+        this.style.boxShadow = "0 0 15px rgba(196,30,30,0.5)";
+        setTimeout(() => {
+          this.textContent = "\u26D4 权限不足";
+          this.style.boxShadow = "";
+        }, 2000);
+      } else if (this.textContent.includes("\u5237\u5361")) {
+        this.textContent = "\u25CB 验证中...";
+        setTimeout(() => {
+          this.textContent = "\u2713 闸门开启";
+          this.style.boxShadow = "0 0 15px var(--color-crt-green-glow)";
+          setTimeout(() => {
+            this.textContent = "\u2713 刷卡进入";
+            this.style.boxShadow = "";
+          }, 3000);
+        }, 1000);
+      } else {
+        this.textContent = "\u25CB 提交申请中...";
+        setTimeout(() => {
+          this.textContent = "\u23F3 等待审批";
+          setTimeout(() => {
+            this.textContent = "请求进入权限";
+          }, 3000);
+        }, 1500);
+      }
+    });
+  </script>
+</Layout>

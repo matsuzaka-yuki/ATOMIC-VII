@@ -1,0 +1,19 @@
+---
+import ClassificationBadge from "../atoms/ClassificationBadge.astro";
+---
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <ClassificationBadge level="top-secret" id="modalBadge" />
+        <span class="modal-title" id="modalTitle">文档标题</span>
+      </div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-grid" id="modalMeta"></div>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+</div>

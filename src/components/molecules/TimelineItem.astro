@@ -1,0 +1,22 @@
+---
+import Rivet from "../atoms/Rivet.astro";
+import type { TimelineEvent } from "../../data/archives";
+
+interface Props extends TimelineEvent {}
+
+const { year, event, description, major } = Astro.props;
+---
+
+<div class="timeline-item fade-in">
+  <div class="timeline-content metal-panel-bg">
+    <Rivet position="tl" />
+    <Rivet position="tr" />
+    <Rivet position="bl" />
+    <Rivet position="br" />
+    <div class="timeline-year">{year}</div>
+    <div class="timeline-event">{event}</div>
+    <p class="timeline-desc">{description}</p>
+  </div>
+  <div class={`timeline-node${major ? " timeline-node-major" : ""}`}></div>
+</div>
+

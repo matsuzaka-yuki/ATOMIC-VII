@@ -1,0 +1,31 @@
+---
+import SectionHeader from "../molecules/SectionHeader.astro";
+import LogEntry from "../molecules/LogEntry.astro";
+import ArtDecoDivider from "../atoms/ArtDecoDivider.astro";
+import VacuumTube from "../atoms/VacuumTube.astro";
+import type { ExperimentLog } from "../../data/archives";
+
+interface Props {
+  logs: ExperimentLog[];
+}
+
+const { logs } = Astro.props;
+---
+
+<section class="py-16 px-6 log-section">
+  <SectionHeader tag="Experiment Logs" label="实验日志" />
+
+  <div class="log-container">
+    {logs.map((log) => (
+      <LogEntry {...log} />
+    ))}
+  </div>
+
+  <div class="flex justify-center gap-6 mt-10">
+    <VacuumTube />
+    <VacuumTube />
+    <VacuumTube />
+    <VacuumTube />
+    <VacuumTube />
+  </div>
+</section>

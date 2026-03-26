@@ -1,0 +1,23 @@
+---
+interface Props {
+  items: Array<{ label: string; href?: string }>;
+  current: string;
+}
+
+const { items, current } = Astro.props;
+---
+
+<div class="breadcrumb">
+  {items.map((item, i) => (
+    <>
+      {item.href ? (
+        <a href={item.href}>{item.label}</a>
+      ) : (
+        <span>{item.label}</span>
+      )}
+      {i < items.length - 1 && <span class="sep">/</span>}
+    </>
+  ))}
+  <span class="sep">/</span>
+  <span class="current">{current}</span>
+</div>
