@@ -219,7 +219,7 @@ export const securityProtocols: Record<string, ProtocolData> = {
   classification: {
     slug: "classification",
     name: "机密等级说明",
-    code: "SP-004",
+    code: "SP-010",
     icon: "\uD83D\uDD12",
     classification: "SECRET",
     classificationLevel: "secret",
@@ -455,7 +455,7 @@ export const securityProtocols: Record<string, ProtocolData> = {
       "故意泄密：立即逮捕 + 军事法庭",
     ],
     relatedProtocols: [
-      { name: "机密等级说明", code: "SP-004", slug: "classification" },
+      { name: "机密等级说明", code: "SP-010", slug: "classification" },
       { name: "权限申请流程", code: "SP-003", slug: "access" },
       { name: "外来人员管控", code: "SP-004", slug: "visitor-control" },
     ],

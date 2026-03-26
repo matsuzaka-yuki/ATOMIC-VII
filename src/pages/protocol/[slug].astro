@@ -4,7 +4,7 @@ import Breadcrumb from "../../components/molecules/Breadcrumb.astro";
 import SectionHeader from "../../components/molecules/SectionHeader.astro";
 import ArtDecoDivider from "../../components/atoms/ArtDecoDivider.astro";
 import MetalPanel from "../../components/molecules/MetalPanel.astro";
-import { securityProtocols } from "../../data/protocols";
+import { securityProtocols, securityProtocolList } from "../../data/protocols";
 
 export function getStaticPaths() {
   return Object.values(securityProtocols).map((proto) => ({
@@ -14,6 +14,11 @@ export function getStaticPaths() {
 }
 
 const { proto } = Astro.props;
+
+const nameToSlug: Record<string, string> = {};
+for (const p of securityProtocolList) {
+  nameToSlug[p.name] = p.slug;
+}
 const breadcrumbItems = [
   { label: "ATOMIC-7", href: "/" },
   { label: "安全协议", href: "/security" },
@@ -168,7 +173,7 @@ const cls = clsColorMap[proto.classificationLevel] ?? clsColorMap.unclassified;
           <SectionHeader tag="Related Protocols" label="关联协议" />
           <div class="flex flex-col gap-4 mb-8">
             {proto.relatedProtocols.map((rp) => (
-              <a href={`/protocol/${rp.slug}`} class="metal-panel-bg p-5 flex items-center justify-between gap-4 fade-in transition-all duration-200" style="text-decoration: none; cursor: pointer;">
+              <a href={`/protocol/${nameToSlug[rp.name] ?? rp.slug}`} class="metal-panel-bg p-5 flex items-center justify-between gap-4 fade-in transition-all duration-200" style="text-decoration: none; cursor: pointer;">
                 <div>
                   <div class="font-typewriter text-[11px] mb-1" style="color: var(--color-crt-green-dim);">
                     {rp.code}
