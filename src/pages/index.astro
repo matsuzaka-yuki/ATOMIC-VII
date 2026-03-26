@@ -1,0 +1,100 @@
+---
+import Layout from "../components/layouts/Layout.astro";
+import Hero from "../components/organisms/Hero.astro";
+import RadarPanel from "../components/organisms/RadarPanel.astro";
+import ArtDecoDivider from "../components/atoms/ArtDecoDivider.astro";
+import SectionHeader from "../components/molecules/SectionHeader.astro";
+import FeatureCard from "../components/organisms/FeatureCard.astro";
+import GaugeCard from "../components/organisms/GaugeCard.astro";
+import Terminal from "../components/organisms/Terminal.astro";
+import CTASection from "../components/organisms/CTASection.astro";
+
+const features = [
+  {
+    number: "01",
+    icon: "⚛",
+    title: "聚变反应堆",
+    description: "第四代托卡马克装置，采用超导磁场约束等离子体，实现持续稳定的核聚变反应。输出功率可达1.2吉瓦，足以供给一座百万人口城市的全部能源需求。",
+    metrics: [
+      { label: "输出功率", value: "1.2 GW" },
+      { label: "运行效率", value: "94.7%" },
+    ],
+  },
+  {
+    number: "02",
+    icon: "🛡",
+    title: "动力装甲",
+    description: "T-51系列同位素动力外骨骼，集成微型核裂变电池与液压伺服系统。为操作者提供增强型力量、全面辐射防护以及战场态势感知能力。",
+    metrics: [
+      { label: "力量倍增", value: "12x" },
+      { label: "续航时间", value: "72 h" },
+    ],
+  },
+  {
+    number: "03",
+    icon: "📡",
+    title: "量子通讯",
+    description: "基于量子纠缠效应的超光速通讯网络，无视电磁干扰与核爆EMP效应。确保在国家遭受核打击后，指挥链路仍可维持运作。",
+    metrics: [
+      { label: "通讯延迟", value: "0 ms" },
+      { label: "加密等级", value: "Q-256" },
+    ],
+  },
+];
+
+const gauges = [
+  { value: 234, unit: "mSv", label: "辐射水平", sublabel: "安全阈值内" },
+  { value: 187, unit: "°C", label: "反应堆温度", sublabel: "正常运行" },
+  { value: 256, unit: "ATM", label: "冷却压力", sublabel: "稳定" },
+  { value: 210, unit: "%", label: "系统能量", sublabel: "满载运行", displayValue: "98" },
+];
+---
+
+<Layout title="ATOMIC-7 // 核子前沿研究所" currentPath="/">
+  <Hero>
+    <Fragment slot="right-panel">
+      <RadarPanel />
+    </Fragment>
+  </Hero>
+
+  <ArtDecoDivider diamonds={2} />
+
+  <section class="py-20 px-6 relative">
+    <SectionHeader tag="核心研究领域" label="前沿科技矩阵" />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1400px] mx-auto">
+      {features.map((feature) => (
+        <FeatureCard {...feature} />
+      ))}
+    </div>
+  </section>
+
+  <ArtDecoDivider diamonds={2} />
+
+  <section class="py-20 px-6 relative" style="background: linear-gradient(180deg, var(--color-bg-dark) 0%, #1e1b16 100%);">
+    <SectionHeader tag="实时监测数据" label="设施状态仪表盘" />
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto">
+      {gauges.map((gauge) => (
+        <GaugeCard
+          value={gauge.value}
+          unit={gauge.unit}
+          label={gauge.label}
+          sublabel={gauge.sublabel}
+          displayValue={gauge.displayValue}
+        />
+      ))}
+    </div>
+  </section>
+
+  <ArtDecoDivider diamonds={1} />
+
+  <section class="py-20 px-6" style="background: var(--color-bg-dark);">
+    <SectionHeader tag="系统日志" label="主控终端输出" />
+    <Terminal />
+  </section>
+
+  <ArtDecoDivider diamonds={2} />
+
+  <CTASection />
+</Layout>
